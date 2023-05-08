@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import React from 'react';
 import ShareAndFavoriteBtns from '../components/ShareAndFavoriteBtns';
 
 export default function RecipeDetails() {
