@@ -108,17 +108,41 @@ export default function RecipeDetails() {
     }
   };
 
+  const recommendationMeals = async () => {
+    const baseURL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+    try {
+      const results = await fetch(baseURL);
+      const dataMeals = await results.json();
+      console.log(dataMeals);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const recommendationDrinks = async () => {
+    const baseURL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+    try {
+      const results = await fetch(baseURL);
+      const dataDrinks = await results.json();
+      console.log(dataDrinks);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const location = useLocation();
   const actualPath = location.pathname;
 
   const chooseAPI = useCallback(() => {
     if (actualPath.includes('/meals')) {
       colectMealData();
+      recommendationDrinks();
       console.log('mealdata');
     }
 
     if (actualPath.includes('/drinks')) {
       colectDrinkData();
+      recommendationMeals();
       console.log('drinkdata');
     }
   }, [actualPath]);
