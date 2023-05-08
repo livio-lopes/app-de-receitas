@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export default function Login() {
   const [user, setUser] = useState({ email: '', password: '' });
+  const history = useHistory();
 
   const validationAccess = () => {
     const validEmail = (/\S+@\S+\.\S+/i).test(user.email);
@@ -12,7 +14,8 @@ export default function Login() {
   };
 
   const loginApp = () => {
-    localStorage.setItem('user', { email: user.email });
+    localStorage.setItem('user', JSON.stringify({ email: user.email }));
+    history.push('/meals');
   };
   return (
 
