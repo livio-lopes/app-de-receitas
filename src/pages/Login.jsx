@@ -10,6 +10,10 @@ export default function Login() {
     console.log(validEmail, validPassword);
     return !(validEmail && validPassword);
   };
+
+  const loginApp = () => {
+    localStorage.setItem('user', { email: user.email });
+  };
   return (
 
     <div>
@@ -37,6 +41,7 @@ export default function Login() {
         type="button"
         data-testid="login-submit-btn"
         disabled={ validationAccess() }
+        onClick={ () => loginApp() }
       >
         Enter
 
