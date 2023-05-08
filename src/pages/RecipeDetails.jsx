@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import React from 'react';
+import ShareAndFavoriteBtns from '../components/ShareAndFavoriteBtns';
 
 export default function RecipeDetails() {
   const searchApiDrinks = async () => {
@@ -33,7 +35,6 @@ export default function RecipeDetails() {
   }, []);
 
   return (
-
     <div>
       <h1>Tela de Detalhes Receitas</h1>
       <button
@@ -46,7 +47,7 @@ export default function RecipeDetails() {
       >
         trigger test bebidas
       </button>
+      <ShareAndFavoriteBtns />
     </div>
-
   );
 }
