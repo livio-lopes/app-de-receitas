@@ -6,15 +6,16 @@ import searchIcon from '../images/searchIcon.svg';
 
 function Header() {
   const history = useHistory();
-  const { pathname } = history.location;
+  const { location, push } = history;
+  const { pathname } = location;
   const arrayPath = pathname.split('');
-  const title = arrayPath.splice(1, 0);
+  const title = arrayPath.splice(1, arrayPath.length);
 
   return (
     <>
       <button
         type="submit"
-        onClick={ () => console.log('a') }
+        onClick={ () => push('/profile') }
         data-testid="profile-top-btn"
       >
         <img
