@@ -2,6 +2,14 @@ import React, { useState } from 'react';
 
 export default function Login() {
   const [user, setUser] = useState({ email: '', password: '' });
+
+  const validationAccess = () => {
+    const validEmail = (/\S+@\S+\.\S+/i).test(user.email);
+    const minPasswordLength = 6;
+    const validPassword = user.password.length > minPasswordLength;
+    console.log(validEmail, validPassword);
+    return !(validEmail && validPassword);
+  };
   return (
 
     <div>
@@ -28,6 +36,7 @@ export default function Login() {
       <button
         type="button"
         data-testid="login-submit-btn"
+        disabled={ validationAccess() }
       >
         Enter
 
