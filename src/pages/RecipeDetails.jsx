@@ -1,10 +1,10 @@
 import React from 'react';
+import ShareAndFavoriteBtns from '../components/ShareAndFavoriteBtns';
 
 export default function RecipeDetails() {
   return (
-    <div>RecipeDetails</div>
-
-    <h1> teste </h1>
-
+    <div>
+      <ShareAndFavoriteBtns />
+    </div>
   );
 }
