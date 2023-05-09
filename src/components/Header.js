@@ -25,8 +25,6 @@ function Header() {
     }
   };
 
-
-
   return (
     <>
       <button
