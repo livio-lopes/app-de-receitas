@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 function Header() {
   const [searchBar, setSearchBar] = useState(false);
@@ -55,13 +56,8 @@ function Header() {
       {
         (searchBar)
         && (
-          <input
-            // name="searchInput"
-            // value="searchInput"
-            data-testid="search-input"
-            placeholder="Pesquise aqui"
-            // onChange={ () => console.log('b') }
-          />
+          <SearchBar />
+
         )
       }
     </>
