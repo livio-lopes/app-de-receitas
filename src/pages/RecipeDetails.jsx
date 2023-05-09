@@ -4,6 +4,8 @@ import ShareAndFavoriteBtns from '../components/ShareAndFavoriteBtns';
 import YoutubeEmbed from '../components/YoutubeEmbed';
 import CarouselRecommendations from '../components/CarouselRecommendations';
 
+import './style/fixedButton.css';
+
 export default function RecipeDetails() {
   const [imageSource, setImageSource] = useState('');
   const [title, setTitle] = useState('');
@@ -184,6 +186,12 @@ export default function RecipeDetails() {
         )
       }
       <CarouselRecommendations />
+      <button
+        data-testid="start-recipe-btn"
+        className="fixedButton"
+      >
+        Start Recipe
+      </button>
       <button
         onClick={ colectMealData }
       >
