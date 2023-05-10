@@ -65,7 +65,7 @@ function SearchBar() {
     } else if (data.drinks.length > 1) {
       setMoreThen12Drinks(true);
     } else {
-      global.alert('No recipe was found');
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
   };
 
