@@ -3,27 +3,19 @@ import './style/ShareAndFavoriteBtns.css';
 import shareIcon from '../images/shareIcon.svg';
 import { AppContext } from '../providers/AppProvider';
 import LinkCopiedMessage from './LinkCopiedMessage';
-import useFetch from '../hooks/useFetch';
+import { RecipeDetailsContext } from '../providers/RecipeDetailsProvider';
 
 const copy = require('clipboard-copy');
 
 function ShareAndFavoriteBtns() {
   const contextValue = useContext(AppContext);
   const { statusLinkCopied } = contextValue;
-  const {
-    imageSource,
-    title,
-    categoryText,
-    instructionsText,
-    youtubeVideoID,
-    alcoholic,
-    id,
-    nationality,
-  } = useFetch();
+  const { objectDetails } = useContext(RecipeDetailsContext);
 
   // console.log(title); não está retornando nada
   const handleClick = (event) => {
     event.preventDefault();
+    console.log('objeto em share:', objectDetails);
 
     const { name } = event.target;
     const { setStatusLinkCopied } = contextValue;

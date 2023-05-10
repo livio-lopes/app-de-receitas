@@ -43,44 +43,68 @@ export default function RecipeDetails() {
     await getIngredients();
   };
 
-  const recommendationMeals = async () => {
-    const baseURL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-    try {
-      const results = await fetch(baseURL);
-      const dataMeals = await results.json();
-      console.log(dataMeals);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const setMealObject = useCallback(() => {
+    const objectMeal = [{ // aqui deve ter um array de objeto
+      idFood,
+      title,
+      imageSource,
+      categoryText,
+      instructionsText,
+      youtubeVideoID,
+      nationality,
+    }];
+    setObjectDetails(objectMeal);
+  }, [
+    idFood,
+    title,
+    imageSource,
+    categoryText,
+    instructionsText,
+    youtubeVideoID,
+    nationality,
+    setObjectDetails,
+  ]);
 
-  const recommendationDrinks = async () => {
-    const baseURL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-    try {
-      const results = await fetch(baseURL);
-      const dataDrinks = await results.json();
-      console.log(dataDrinks);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const setDrinkObject = useCallback(() => {
+    const drinkObject = [{ // aqui deve ter um array de objeto
+      idFood,
+      title,
+      imageSource,
+      categoryText,
+      instructionsText,
+      youtubeVideoID,
+      alcoholic,
+    }];
+    setObjectDetails(drinkObject);
+  }, [
+    idFood,
+    title,
+    imageSource,
+    categoryText,
+    instructionsText,
+    youtubeVideoID,
+    alcoholic,
+    setObjectDetails,
+  ]);
 
   const location = useLocation();
   const actualPath = location.pathname;
+  // const pathname = "/meals/52771";
+  // const numeros = pathname.replace(/\D/g, "");
 
   const chooseAPI = useCallback(() => {
     if (actualPath.includes('/meals')) {
       colectMealData();
-      recommendationDrinks();
-      console.log('mealdata');
+      setMealObject();
+      console.log('mealdata chamado');
     }
 
     if (actualPath.includes('/drinks')) {
       colectDrinkData();
-      recommendationMeals();
-      console.log('drinkdata');
+      setDrinkObject();
+      console.log('drinkdata chamado');
     }
-  }, [actualPath]);
+  }, [actualPath, setMealObject, setDrinkObject]);
 
   useEffect(() => {
     chooseAPI();
@@ -141,15 +165,12 @@ export default function RecipeDetails() {
           />
         )
       }
+      <CarouselRecommendations />
       <button
-        onClick={ colectMealData }
+        data-testid="start-recipe-btn"
+        className="fixedButton"
       >
-        trigger test comida
-      </button>
-      <button
-        onClick={ colectDrinkData }
-      >
-        trigger test bebidas
+        Start Recipe
       </button>
     </div>
   );
