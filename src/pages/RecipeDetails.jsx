@@ -1,9 +1,8 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ShareAndFavoriteBtns from '../components/ShareAndFavoriteBtns';
 import YoutubeEmbed from '../components/YoutubeEmbed';
 import CarouselRecommendations from '../components/CarouselRecommendations';
-import { RecipeDetailsContext } from '../providers/RecipeDetailsProvider';
 
 import './style/fixedButton.css';
 
@@ -18,8 +17,7 @@ export default function RecipeDetails() {
   const [alcoholic, setAlcoholic] = useState('');
   const [idFood, setIdFood] = useState();
   const [nationality, setNationality] = useState('');
-
-  const { setObjectDetails } = useContext(RecipeDetailsContext);
+  const [objectDetails, setObjectDetails] = useState({});
 
   const colectDrinkData = async () => {
     const idCyPress = 178319;
@@ -40,7 +38,9 @@ export default function RecipeDetails() {
           strAlcoholic,
           strInstructions,
           idDrink,
+          strCategory,
         } = dataDrinks.drinks[0];
+        setCategoryText(strCategory);
         setIdFood(idDrink);
         setImageSource(strDrinkThumb);
         setTitle(strDrink);
@@ -185,7 +185,9 @@ export default function RecipeDetails() {
   return (
     <div>
       <h1>Tela de Detalhes Receitas</h1>
-      <ShareAndFavoriteBtns />
+      <ShareAndFavoriteBtns
+        recipe={ objectDetails }
+      />
 
       <img data-testid="recipe-photo" src={ imageSource } alt="bebida img" />
       <h2 data-testid="recipe-title">
@@ -204,9 +206,6 @@ export default function RecipeDetails() {
             </p>
           )
       }
-      <p data-testid="recipe-category">
-        { categoryText }
-      </p>
       {
         ingredients.length > 0 && ingredients.map((ingredient, index) => (
           <p

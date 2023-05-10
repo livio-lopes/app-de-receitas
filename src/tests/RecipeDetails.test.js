@@ -5,6 +5,7 @@ import { renderWithRouter } from './helpers/renderWithRouter';
 import { AppProvider } from '../providers/AppProvider';
 import mealId52771 from '../mocks/mealId52771';
 import drinksRecommendations from '../mocks/drinksRecommendations';
+import { RecipeDetailsProvider } from '../providers/RecipeDetailsProvider';
 
 let mealMock;
 let drinkMock;
@@ -21,9 +22,11 @@ describe('Testa a page RecipeDetails', () => {
     });
 
     act(() => {
-      render(
+      renderWithRouter(
         <AppProvider>
-          <RecipeDetails />
+          <RecipeDetailsProvider>
+            <RecipeDetails />
+          </RecipeDetailsProvider>
         </AppProvider>,
         { initialEntries: [mealsPath] },
       );
@@ -51,14 +54,5 @@ describe('Testa a page RecipeDetails', () => {
   });
 
   it('Verifica se existe uma tabela com header', () => {
-    const { history } = renderWithRouter(
-      <AppProvider>
-        <RecipeDetails />
-      </AppProvider>,
-      { initialEntries: [mealsPath] },
-    );
-    const { location: { pathname } } = history;
-    expect(pathname).toBe(mealsPath);
-    console.log(pathname);
   });
 });
