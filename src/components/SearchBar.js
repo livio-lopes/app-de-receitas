@@ -1,28 +1,56 @@
 import React, { useState } from 'react';
 import {
-  fetchDataIngredient,
-  fetchDataNameSearch,
-  fetchDataFirstLetter,
+  fetchMealsIngredient,
+  fetchMealsNameSearch,
+  fetchMealsFirstLetter,
+  fetchDrinksIngredient,
+  fetchDrinksNameSearch,
+  fetchDrinksFirstLetter,
 } from '../hooks/useFetch';
 
 function SearchBar() {
   const [searchInput, setSeachInput] = useState('');
   const [radioSearch, setsetRadioSearch] = useState(null);
 
-  const handleClickSearch = async () => {
+  const searcMeals = async () => {
     if (radioSearch === 'ingredient') {
-      const data = await fetchDataIngredient(searchInput);
+      const data = await fetchMealsIngredient(searchInput);
       return data;
     } if (radioSearch === 'name') {
-      const data = await fetchDataNameSearch(searchInput);
+      const data = await fetchMealsNameSearch(searchInput);
       return data;
     } if (radioSearch === 'firstLetter') {
       if (searchInput.length > 1) {
         global.alert(searchInput);
       } else {
-        const data = await fetchDataFirstLetter(searchInput);
+        const data = await fetchMealsFirstLetter(searchInput);
         return data;
       }
+    }
+  };
+
+  const searchDrinks = async () => {
+    if (radioSearch === 'ingredient') {
+      const data = await fetchDrinksIngredient(searchInput);
+      return data;
+    } if (radioSearch === 'name') {
+      const data = await fetchDrinksNameSearch(searchInput);
+      return data;
+    } if (radioSearch === 'firstLetter') {
+      if (searchInput.length > 1) {
+        global.alert(searchInput);
+      } else {
+        const data = await fetchDrinksFirstLetter(searchInput);
+        return data;
+      }
+    }
+  };
+
+  const handleClickSearch = async () => {
+    if (pathname === '/meals') {
+      searcMeals();
+    } else if (pathname === '/drinks') {
+      searchDrinks();
     }
   };
 
