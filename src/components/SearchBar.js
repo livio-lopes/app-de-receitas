@@ -1,20 +1,30 @@
-import React, { useState, useCallback } from 'react';
-import fetchData from '../hooks/useFetch';
+import React, { useState } from 'react';
+import {
+  fetchDataIngredient,
+  fetchDataNameSearch,
+  fetchDataFirstLetter,
+} from '../hooks/useFetch';
 
 function SearchBar() {
   const [searchInput, setSeachInput] = useState('');
-  const [searchIngredient, setSeachIngredient] = useState(null);
+  const [radioSearch, setsetRadioSearch] = useState(null);
 
   const handleClickSearch = async () => {
-    if (searchIngredient != null) {
-      const data = await fetchData(searchInput);
-      return console.log(data);
+    if (radioSearch === 'ingredient') {
+      const data = await fetchDataIngredient(searchInput);
+      return data;
+    } if (radioSearch === 'name') {
+      const data = await fetchDataNameSearch(searchInput);
+      return data;
+    } if (radioSearch === 'firstLetter') {
+      if (searchInput.length > 1) {
+        global.alert(searchInput);
+      } else {
+        const data = await fetchDataFirstLetter(searchInput);
+        return data;
+      }
     }
-    return console.log('xablau');
   };
-
-  /* console.log(data);
-    console.log(searchInput); */
 
   return (
     <form>
@@ -30,8 +40,8 @@ function SearchBar() {
           type="radio"
           name="search"
           data-testid="ingredient-search-bar"
-          value="ingredientSearchBar"
-          onChange={ ({ target }) => setSeachIngredient(target.value) }
+          value="ingredient"
+          onChange={ ({ target }) => setsetRadioSearch(target.value) }
         />
       </label>
       <label>
@@ -40,7 +50,8 @@ function SearchBar() {
           type="radio"
           name="search"
           data-testid="name-search-radio"
-          value="nameSearchRadio"
+          value="name"
+          onChange={ ({ target }) => setsetRadioSearch(target.value) }
         />
       </label>
       <label>
@@ -49,7 +60,8 @@ function SearchBar() {
           type="radio"
           name="search"
           data-testid="first-letter-search-radio"
-          value="firstLetterSearchRadio"
+          value="firstLetter"
+          onChange={ ({ target }) => setsetRadioSearch(target.value) }
         />
       </label>
       <button
