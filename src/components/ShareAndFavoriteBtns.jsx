@@ -3,15 +3,18 @@ import './style/ShareAndFavoriteBtns.css';
 import shareIcon from '../images/shareIcon.svg';
 import { AppContext } from '../providers/AppProvider';
 import LinkCopiedMessage from './LinkCopiedMessage';
+import { RecipeDetailsContext } from '../providers/RecipeDetailsProvider';
 
 const copy = require('clipboard-copy');
 
 function ShareAndFavoriteBtns() {
   const contextValue = useContext(AppContext);
   const { statusLinkCopied } = contextValue;
+  const { objectDetails } = useContext(RecipeDetailsContext);
 
   const handleClick = (event) => {
     event.preventDefault();
+    console.log('objeto em share:', objectDetails);
 
     const { name } = event.target;
     const { setStatusLinkCopied } = contextValue;

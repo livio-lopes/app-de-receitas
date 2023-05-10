@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ShareAndFavoriteBtns from '../components/ShareAndFavoriteBtns';
 import YoutubeEmbed from '../components/YoutubeEmbed';
 import CarouselRecommendations from '../components/CarouselRecommendations';
+import { RecipeDetailsContext } from '../providers/RecipeDetailsProvider';
 
 import './style/fixedButton.css';
 
@@ -15,10 +16,14 @@ export default function RecipeDetails() {
   const [ingredients, setIngredients] = useState([]);
   const [mensures, setMensures] = useState([]);
   const [alcoholic, setAlcoholic] = useState('');
+  const [idFood, setIdFood] = useState();
+  const [nationality, setNationality] = useState('');
+
+  const { setObjectDetails } = useContext(RecipeDetailsContext);
 
   const colectDrinkData = async () => {
-    const idDrink = 178319;
-    const DRINKSURL = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`;
+    const idCyPress = 178319;
+    const DRINKSURL = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idCyPress}`;
     try {
       // Bebidas
       const resultsDrinks = await fetch(DRINKSURL);
@@ -34,7 +39,9 @@ export default function RecipeDetails() {
           strDrink,
           strAlcoholic,
           strInstructions,
+          idDrink,
         } = dataDrinks.drinks[0];
+        setIdFood(idDrink);
         setImageSource(strDrinkThumb);
         setTitle(strDrink);
         setAlcoholic(strAlcoholic);
@@ -61,8 +68,8 @@ export default function RecipeDetails() {
   };
 
   const colectMealData = async () => {
-    const idMeal = 52771;
-    const MEALURL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
+    const idCyPress = 52771;
+    const MEALURL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idCyPress}`;
     try {
       // Comidas
       const resultsFoods = await fetch(MEALURL);
@@ -73,13 +80,10 @@ export default function RecipeDetails() {
       }
       if (dataFoods.meals !== null) {
         console.log('comida nesse id:', dataFoods.meals[0]);
-        const {
-          strMealThumb,
-          strMeal,
-          strCategory,
-          strInstructions,
-          strYoutube,
-        } = dataFoods.meals[0];
+        const { strMealThumb, strMeal, strCategory, strInstructions,
+          strYoutube, idMeal, strArea } = dataFoods.meals[0];
+        setIdFood(idMeal);
+        setNationality(strArea);
         setImageSource(strMealThumb);
         setTitle(strMeal);
         setCategoryText(strCategory);
@@ -111,6 +115,50 @@ export default function RecipeDetails() {
     }
   };
 
+  const setMealObject = useCallback(() => {
+    const objectMeal = [{ // aqui deve ter um array de objeto
+      idFood,
+      title,
+      imageSource,
+      categoryText,
+      instructionsText,
+      youtubeVideoID,
+      nationality,
+    }];
+    setObjectDetails(objectMeal);
+  }, [
+    idFood,
+    title,
+    imageSource,
+    categoryText,
+    instructionsText,
+    youtubeVideoID,
+    nationality,
+    setObjectDetails,
+  ]);
+
+  const setDrinkObject = useCallback(() => {
+    const drinkObject = [{ // aqui deve ter um array de objeto
+      idFood,
+      title,
+      imageSource,
+      categoryText,
+      instructionsText,
+      youtubeVideoID,
+      alcoholic,
+    }];
+    setObjectDetails(drinkObject);
+  }, [
+    idFood,
+    title,
+    imageSource,
+    categoryText,
+    instructionsText,
+    youtubeVideoID,
+    alcoholic,
+    setObjectDetails,
+  ]);
+
   const location = useLocation();
   const actualPath = location.pathname;
   // const pathname = "/meals/52771";
@@ -119,23 +167,20 @@ export default function RecipeDetails() {
   const chooseAPI = useCallback(() => {
     if (actualPath.includes('/meals')) {
       colectMealData();
+      setMealObject();
       console.log('mealdata chamado');
     }
 
     if (actualPath.includes('/drinks')) {
       colectDrinkData();
+      setDrinkObject();
       console.log('drinkdata chamado');
     }
-  }, [actualPath]);
+  }, [actualPath, setMealObject, setDrinkObject]);
 
   useEffect(() => {
     chooseAPI();
   }, [chooseAPI]);
-
-  console.log(alcoholic);
-  if (alcoholic) {
-    console.log(categoryText);
-  }
 
   return (
     <div>
@@ -159,6 +204,9 @@ export default function RecipeDetails() {
             </p>
           )
       }
+      <p data-testid="recipe-category">
+        { categoryText }
+      </p>
       {
         ingredients.length > 0 && ingredients.map((ingredient, index) => (
           <p
@@ -195,16 +243,6 @@ export default function RecipeDetails() {
         className="fixedButton"
       >
         Start Recipe
-      </button>
-      <button
-        onClick={ colectMealData }
-      >
-        trigger test comida
-      </button>
-      <button
-        onClick={ colectDrinkData }
-      >
-        trigger test bebidas
       </button>
     </div>
   );
