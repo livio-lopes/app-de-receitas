@@ -1,20 +1,20 @@
 import React, { useContext } from 'react';
+import propTypes from 'prop-types';
 import './style/ShareAndFavoriteBtns.css';
 import shareIcon from '../images/shareIcon.svg';
 import { AppContext } from '../providers/AppProvider';
 import LinkCopiedMessage from './LinkCopiedMessage';
-import { RecipeDetailsContext } from '../providers/RecipeDetailsProvider';
 
 const copy = require('clipboard-copy');
 
-function ShareAndFavoriteBtns() {
+function ShareAndFavoriteBtns({ recipe }) {
   const contextValue = useContext(AppContext);
   const { statusLinkCopied } = contextValue;
-  const { objectDetails } = useContext(RecipeDetailsContext);
+  console.log('objeto em share:', recipe);
 
   const handleClick = (event) => {
     event.preventDefault();
-    console.log('objeto em share:', objectDetails);
+    console.log('objeto em share:', recipe);
 
     const { name } = event.target;
     const { setStatusLinkCopied } = contextValue;
@@ -65,5 +65,25 @@ function ShareAndFavoriteBtns() {
     </div>
   );
 }
+
+ShareAndFavoriteBtns.propTypes = {
+  recipe: propTypes.shape({
+    idFood: propTypes.number.isRequired,
+    title: propTypes.string.isRequired,
+    imageSource: propTypes.string.isRequired,
+    categoryText: propTypes.string.isRequired,
+    instructionsText: propTypes.string.isRequired,
+    youtubeVideoID: propTypes.string.isRequired,
+    alcoholic: propTypes.string.isRequired,
+  }).isRequired || ({
+    idFood: propTypes.number.isRequired,
+    title: propTypes.string.isRequired,
+    imageSource: propTypes.string.isRequired,
+    categoryText: propTypes.string.isRequired,
+    instructionsText: propTypes.string.isRequired,
+    youtubeVideoID: propTypes.string.isRequired,
+    nationality: propTypes.string.isRequired,
+  }).isRequired,
+}.isRequired;
 
 export default ShareAndFavoriteBtns;
