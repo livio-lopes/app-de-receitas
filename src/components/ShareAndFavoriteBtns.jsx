@@ -3,18 +3,42 @@ import './style/ShareAndFavoriteBtns.css';
 import shareIcon from '../images/shareIcon.svg';
 import { AppContext } from '../providers/AppProvider';
 import LinkCopiedMessage from './LinkCopiedMessage';
+import useFetch from '../hooks/useFetch';
 
 const copy = require('clipboard-copy');
 
 function ShareAndFavoriteBtns() {
   const contextValue = useContext(AppContext);
   const { statusLinkCopied } = contextValue;
+  const {
+    imageSource,
+    title,
+    categoryText,
+    instructionsText,
+    youtubeVideoID,
+    alcoholic,
+    id,
+    nationality,
+  } = useFetch();
 
+  // console.log(title); não está retornando nada
   const handleClick = (event) => {
     event.preventDefault();
 
     const { name } = event.target;
     const { setStatusLinkCopied } = contextValue;
+
+    const objectRecipe = [{ // aqui deve ter um array de objeto
+      id,
+      title,
+      imageSource,
+      categoryText,
+      instructionsText,
+      alcoholic,
+      youtubeVideoID,
+      nationality,
+    }];
+    const getFavoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')); // array de objetos(receitas favoritadas)
 
     if (name === 'shareBtn') {
       // lógica do botão compartilhar
@@ -22,9 +46,20 @@ function ShareAndFavoriteBtns() {
       copy(pageLink);
       setStatusLinkCopied(true);
     }
-    if (name === 'favoriteBtn') {
-      // inserir lógica do botão favoritar
-      console.log('favoritar!');
+
+    if (name === 'favoriteBtn' && getFavoriteRecipes) {
+      // lógica do botão favoritar
+      const objectFound = getFavoriteRecipes.some((recipe) => recipe
+        .id === objectRecipe.id); // verifica se o objeto já existe na lista
+
+      if (objectFound === false) {
+        // caso o objeto ainda não exista no localStorage
+        localStorage.setItem('favoriteRecipes', JSON
+          .stringify([...getFavoriteRecipes, objectRecipe]));
+      }
+    } else if (name === 'favoriteBtn') {
+      // caso o objeto já exista no localStorage
+      localStorage.setItem('favoriteRecipes', JSON.stringify(objectRecipe));
     }
   };
 

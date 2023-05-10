@@ -66,3 +66,9 @@
     transform: rotate(-10deg);
   }
 }
+
+.tb {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
