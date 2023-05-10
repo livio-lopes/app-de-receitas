@@ -113,22 +113,29 @@ export default function RecipeDetails() {
 
   const location = useLocation();
   const actualPath = location.pathname;
+  // const pathname = "/meals/52771";
+  // const numeros = pathname.replace(/\D/g, "");
 
   const chooseAPI = useCallback(() => {
     if (actualPath.includes('/meals')) {
       colectMealData();
-      console.log('mealdata');
+      console.log('mealdata chamado');
     }
 
     if (actualPath.includes('/drinks')) {
       colectDrinkData();
-      console.log('drinkdata');
+      console.log('drinkdata chamado');
     }
   }, [actualPath]);
 
   useEffect(() => {
     chooseAPI();
   }, [chooseAPI]);
+
+  console.log(alcoholic);
+  if (alcoholic) {
+    console.log(categoryText);
+  }
 
   return (
     <div>
@@ -152,9 +159,6 @@ export default function RecipeDetails() {
             </p>
           )
       }
-      <p data-testid="recipe-category">
-        { categoryText }
-      </p>
       {
         ingredients.length > 0 && ingredients.map((ingredient, index) => (
           <p
