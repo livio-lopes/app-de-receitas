@@ -5,15 +5,22 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 
+const captalize = (string) => (
+  string.charAt(0).toUpperCase() + string.slice(1)
+);
+
 function Header() {
   const [searchBar, setSearchBar] = useState(false);
 
   const history = useHistory();
   const { location, push } = history;
   const { pathname } = location;
+
   const handleTitle = () => {
-    const arrayPath = pathname.split('');
-    const title = arrayPath.splice(1, arrayPath.length);
+    const arrayPath = pathname.split('/');
+    const title = arrayPath[arrayPath.length - 1].split('-')
+      .map((arr) => (
+        captalize(arr))).join(' ');
     return title;
   };
 
