@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   fetchMealsIngredient,
   fetchMealsNameSearch,
@@ -11,6 +12,8 @@ import {
 function SearchBar() {
   const [searchInput, setSeachInput] = useState('');
   const [radioSearch, setsetRadioSearch] = useState(null);
+
+  const history = useHistory();
 
   const searcMeals = async () => {
     if (radioSearch === 'ingredient') {
@@ -26,6 +29,9 @@ function SearchBar() {
         const data = await fetchMealsFirstLetter(searchInput);
         return data;
       }
+    }
+    if (data.meals.length > 1) {
+      history.push('/meals/52771'); // utilizando um id para teste => 52771
     }
   };
 
@@ -43,6 +49,9 @@ function SearchBar() {
         const data = await fetchDrinksFirstLetter(searchInput);
         return data;
       }
+    }
+    if (data.drinks.length > 1) {
+      history.push('/meals/178319'); // utilizando um id para teste => :id-da-receita
     }
   };
 
