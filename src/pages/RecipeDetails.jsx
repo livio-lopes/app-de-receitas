@@ -194,15 +194,15 @@ export default function RecipeDetails() {
         { title }
       </h2>
       {
-        categoryText
+        alcoholic
           ? (
             <p data-testid="recipe-category">
-              { categoryText }
+              { alcoholic }
             </p>
           )
           : (
             <p data-testid="recipe-category">
-              { alcoholic }
+              { categoryText }
             </p>
           )
       }

@@ -11,7 +11,7 @@ function CarouselRecommendations() {
     try {
       const results = await fetch(baseURL);
       const dataMeals = await results.json();
-      console.log('carnes:', dataMeals);
+      console.log('carnes recomendações:', dataMeals);
 
       // criar item do carousel de carnes na tela de bebidas
 
@@ -38,7 +38,7 @@ function CarouselRecommendations() {
     try {
       const results = await fetch(baseURL);
       const dataDrinks = await results.json();
-      console.log('bebidas:', dataDrinks);
+      console.log('bebidas recomendações:', dataDrinks);
       // criar item do carousel de bebidas na tela de carnes
       // 0, 1, 2, 3, 4, 5
       const limitAPI = 6;
