@@ -117,47 +117,29 @@ export default function RecipeDetails() {
 
   const setMealObject = useCallback(() => {
     const objectMeal = [{ // aqui deve ter um array de objeto
-      idFood,
-      title,
-      imageSource,
-      categoryText,
-      instructionsText,
-      youtubeVideoID,
+      alcoholicOrNot: '',
+      category: categoryText,
+      id: idFood,
+      image: imageSource,
+      name: title,
       nationality,
+      type: 'meal',
     }];
     setObjectDetails(objectMeal);
-  }, [
-    idFood,
-    title,
-    imageSource,
-    categoryText,
-    instructionsText,
-    youtubeVideoID,
-    nationality,
-    setObjectDetails,
-  ]);
+  }, [idFood, title, imageSource, categoryText, nationality, setObjectDetails]);
 
   const setDrinkObject = useCallback(() => {
     const drinkObject = [{ // aqui deve ter um array de objeto
-      idFood,
-      title,
-      imageSource,
-      categoryText,
-      instructionsText,
-      youtubeVideoID,
-      alcoholic,
+      alcoholicOrNot: alcoholic,
+      category: categoryText,
+      id: idFood,
+      image: imageSource,
+      name: title,
+      nationality: '',
+      type: 'drink',
     }];
     setObjectDetails(drinkObject);
-  }, [
-    idFood,
-    title,
-    imageSource,
-    categoryText,
-    instructionsText,
-    youtubeVideoID,
-    alcoholic,
-    setObjectDetails,
-  ]);
+  }, [idFood, title, imageSource, categoryText, alcoholic, setObjectDetails]);
 
   const location = useLocation();
   const actualPath = location.pathname;
@@ -194,15 +176,15 @@ export default function RecipeDetails() {
         { title }
       </h2>
       {
-        categoryText
+        alcoholic
           ? (
             <p data-testid="recipe-category">
-              { categoryText }
+              { alcoholic }
             </p>
           )
           : (
             <p data-testid="recipe-category">
-              { alcoholic }
+              { categoryText }
             </p>
           )
       }
