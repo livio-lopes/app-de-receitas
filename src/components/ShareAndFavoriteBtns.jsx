@@ -10,14 +10,16 @@ const copy = require('clipboard-copy');
 function ShareAndFavoriteBtns({ recipe }) {
   const contextValue = useContext(AppContext);
   const { statusLinkCopied } = contextValue;
-  console.log('objeto em share:', recipe);
 
+  // console.log(title); não está retornando nada
   const handleClick = (event) => {
     event.preventDefault();
-    console.log('objeto em share:', recipe);
+    // console.log('objeto em share:', recipe);
 
     const { name } = event.target;
     const { setStatusLinkCopied } = contextValue;
+
+    const getFavoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')); // array de objetos(receitas favoritadas)
 
     if (name === 'shareBtn') {
       // lógica do botão compartilhar
@@ -25,9 +27,20 @@ function ShareAndFavoriteBtns({ recipe }) {
       copy(pageLink);
       setStatusLinkCopied(true);
     }
-    if (name === 'favoriteBtn') {
-      // inserir lógica do botão favoritar
-      console.log('favoritar!');
+
+    if (name === 'favoriteBtn' && getFavoriteRecipes) {
+      // lógica do botão favoritar
+      const objectFound = getFavoriteRecipes.some((recipeFound) => recipeFound
+        .id === recipe[0].id); // verifica se o objeto já existe na lista
+
+      if (objectFound === false) {
+        // caso o objeto ainda não exista no localStorage
+        localStorage.setItem('favoriteRecipes', JSON
+          .stringify([...getFavoriteRecipes, ...recipe]));
+      }
+    } else if (name === 'favoriteBtn') {
+      // caso o objeto já exista no localStorage
+      localStorage.setItem('favoriteRecipes', JSON.stringify(recipe));
     }
   };
 
