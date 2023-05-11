@@ -1,3 +1,33 @@
 .ShareIcon {
   pointer-events: none;
 }
+
+.ContainerBtns {
+  display: flex;
+  gap: 10px;
+}
+
+.FavoriteBtnLabel {
+  display: flex;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+.FavoriteBtnInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.FavoriteBtnIcon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

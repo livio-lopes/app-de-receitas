@@ -1,20 +1,41 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import propTypes from 'prop-types';
 import './style/ShareAndFavoriteBtns.css';
 import shareIcon from '../images/shareIcon.svg';
 import { AppContext } from '../providers/AppProvider';
 import LinkCopiedMessage from './LinkCopiedMessage';
 
+/* Imagens importadas */
+import whiteHeart from '../images/whiteHeartIcon.svg';
+import blackHeart from '../images/blackHeartIcon.svg';
+
 const copy = require('clipboard-copy');
 
 function ShareAndFavoriteBtns({ recipe }) {
   const contextValue = useContext(AppContext);
   const { statusLinkCopied } = contextValue;
+  const [isFavorite, setIsFavorite] = useState(false);
 
-  // console.log(title); não está retornando nada
+  useEffect(() => {
+    const getFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    let favoriteExist = false;
+
+    if (getFavorite && recipe[0]) {
+      if (recipe[0].id) {
+        favoriteExist = getFavorite
+          .some((favorite) => favorite.id === recipe[0].id);
+      } else {
+        favoriteExist = false;
+      }
+    }
+
+    if (favoriteExist) {
+      setIsFavorite(true);
+    }
+  }, [recipe]);
+
   const handleClick = (event) => {
     event.preventDefault();
-    // console.log('objeto em share:', recipe);
 
     const { name } = event.target;
     const { setStatusLinkCopied } = contextValue;
@@ -37,16 +58,18 @@ function ShareAndFavoriteBtns({ recipe }) {
         // caso o objeto ainda não exista no localStorage
         localStorage.setItem('favoriteRecipes', JSON
           .stringify([...getFavoriteRecipes, ...recipe]));
+        setIsFavorite(true);
       }
     } else if (name === 'favoriteBtn') {
       // caso o objeto já exista no localStorage
       localStorage.setItem('favoriteRecipes', JSON.stringify(recipe));
+      setIsFavorite(true);
     }
   };
 
   return (
     <div>
-      <section>
+      <section className="ContainerBtns">
         <button
           data-testid="share-btn"
           type="submit"
@@ -59,13 +82,47 @@ function ShareAndFavoriteBtns({ recipe }) {
             alt="ícone de compartilhar"
           />
         </button>
-        <button
-          data-testid="favorite-btn"
-          onClick={ handleClick }
-          name="favoriteBtn"
-        >
-          Favoritar
-        </button>
+        <span>
+          {
+            isFavorite ? (
+              <label className="FavoriteBtnLabel">
+                <input
+                  type="button"
+                  value=""
+                  src={ blackHeart }
+                  className="FavoriteBtnInput"
+                  onClick={ handleClick }
+                  name="favoriteBtn"
+                  data-testid="favorite-btn"
+                />
+                <img
+                  src={ blackHeart }
+                  className="FavoriteBtnIcon"
+                  alt="pequeno coração preto, indicando que a receita está favoritada"
+                />
+              </label>
+            )
+              : (
+                <label className="FavoriteBtnLabel">
+                  <input
+                    type="button"
+                    value=""
+                    src={ whiteHeart }
+                    className="FavoriteBtnInput"
+                    onClick={ handleClick }
+                    name="favoriteBtn"
+                    data-testid="favorite-btn"
+                  />
+                  <img
+                    src={ whiteHeart }
+                    className="FavoriteBtnIcon"
+                    alt="pequeno coração vazio,
+                      indicando que a receita não está favoritada"
+                  />
+                </label>
+              )
+          }
+        </span>
       </section>
 
       {/* Mensagem exibida no click do botão share */}
