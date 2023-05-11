@@ -18,7 +18,6 @@ export default function Routes() {
       <Route exact path={ `/meals/${idDaReceitaMeals}` } component={ RecipeDetails } />
       <Route exact path={ `/drinks/${idDaReceitaDrinks}` } component={ RecipeDetails } />
       <Route exact path="/profile" component={ Profile } />
-      <Route exact path="/profile" component={ Profile } />
       <Route exact path="/done-recipes" component={ DoneRecipes } />
       <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
     </Switch>
