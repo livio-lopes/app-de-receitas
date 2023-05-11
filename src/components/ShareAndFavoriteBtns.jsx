@@ -59,6 +59,10 @@ function ShareAndFavoriteBtns({ recipe }) {
         localStorage.setItem('favoriteRecipes', JSON
           .stringify([...getFavoriteRecipes, ...recipe]));
         setIsFavorite(true);
+      } else {
+        // remove o objeto caso já exista na lista
+        localStorage.removeItem('favoriteRecipes');
+        setIsFavorite(false);
       }
     } else if (name === 'favoriteBtn') {
       // caso o objeto já exista no localStorage
