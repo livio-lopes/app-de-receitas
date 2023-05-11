@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { arrlen20 } from '../util/arrlen20';
-import IngredienteStep from '../components/IngredienteStep';
+import { arrlen20, arrlen15 } from '../util/arrAux';
+import IngredientStep from '../components/IngredientStep';
 
 export default function RecipeInProgress() {
   const [recipe, setRecipe] = useState({});
+  const [listIngredients, setListIngredients] = useState([]);
   const [isMeals, setIsMeals] = useState(true);
   const { recipeId } = useParams();
   const location = useLocation();
@@ -17,6 +18,7 @@ export default function RecipeInProgress() {
         .then((data) => {
           setIsMeals(true);
           setRecipe(data.meals[0]);
+          setListIngredients(arrlen20);
         });
     }
     if (location.pathname.includes('drinks')) {
@@ -26,6 +28,7 @@ export default function RecipeInProgress() {
         .then((data) => {
           setIsMeals(false);
           setRecipe(data.drinks[0]);
+          setListIngredients(arrlen15);
         });
     }
   }, [setRecipe, recipeId, location.pathname]);
@@ -58,22 +61,21 @@ export default function RecipeInProgress() {
       <p data-testid="instructions">
         {recipe.strInstructions}
       </p>
-      <ul>
-        {arrlen20.map((item, index) => {
-          const ingredient = `strIngredient${item}`;
-          const measure = `strMeasure${item}`;
-          return recipe[ingredient]
+
+      {listIngredients.map((item, index) => {
+        const ingredient = `strIngredient${item}`;
+        const measure = `strMeasure${item}`;
+        return recipe[ingredient]
           && (
-            <li key={ index }>
-              <IngredienteStep
-                index={ index }
-                ingredient={ recipe[ingredient] }
-                measure={ recipe[measure] }
-              />
-            </li>
+            <IngredientStep
+              index={ index }
+              ingredient={ recipe[ingredient] }
+              measure={ recipe[measure] }
+            />
+
           );
-        })}
-      </ul>
+      })}
+
       <button
         type="button"
         data-testid="finish-recipe-btn"
