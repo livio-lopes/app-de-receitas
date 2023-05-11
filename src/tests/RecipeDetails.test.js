@@ -7,6 +7,7 @@ import mealId52771 from '../mocks/mealId52771';
 import drinksRecommendations from '../mocks/drinksRecommendations';
 import drinkId178319 from '../mocks/drinkId178319';
 import mealsRecommendations from '../mocks/mealsRecommendations';
+import { RecipeDetailsProvider } from '../providers/RecipeDetailsProvider';
 
 let mealMock;
 let drinkMock;
@@ -26,16 +27,13 @@ describe('Testa a page RecipeDetails no endereço /meals/52771', () => {
     await act(async () => {
       renderWithRouter(
         <AppProvider>
-          <RecipeDetails />
+          <RecipeDetailsProvider>
+            <RecipeDetails />
+          </RecipeDetailsProvider>
         </AppProvider>,
         { initialEntries: [mealsPath] },
       );
     });
-  });
-
-  afterEach(() => {
-    mealMock.mockRestore();
-    drinkMock.mockRestore();
   });
 
   it('testa a requisição na API da carne id 52771', async () => {
@@ -79,7 +77,9 @@ describe('Testa a page RecipeDetails no endereço /drinks/178319', () => {
     await act(async () => {
       renderWithRouter(
         <AppProvider>
-          <RecipeDetails />
+          <RecipeDetailsProvider>
+            <RecipeDetails />
+          </RecipeDetailsProvider>
         </AppProvider>,
         { initialEntries: [drinksPath] },
       );
