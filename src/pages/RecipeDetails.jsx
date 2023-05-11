@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import ShareAndFavoriteBtns from '../components/ShareAndFavoriteBtns';
 import YoutubeEmbed from '../components/YoutubeEmbed';
 import CarouselRecommendations from '../components/CarouselRecommendations';
@@ -31,6 +31,7 @@ export default function RecipeDetails() {
 
   // definição da receita de acordo com a rota - IDs será parametro de colectMealData e ColectDrinkData;
   const location = useLocation();
+  const history = useHistory();
   const actualPath = location.pathname;
   const IDs = actualPath.replace(/\D/g, '');
   console.log('ronaldo id:', IDs);
@@ -172,7 +173,11 @@ export default function RecipeDetails() {
       <CarouselRecommendations />
       {
         !recipeDone && (
-          <button data-testid="start-recipe-btn" className="fixedButton">
+          <button
+            data-testid="start-recipe-btn"
+            className="fixedButton"
+            onClick={ () => { history.push(`${actualPath}/in-progress`); } }
+          >
             { startButton }
           </button>)
       }
