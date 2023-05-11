@@ -20,60 +20,63 @@ function SearchBar() {
   const [moreThen12Drinks, setMoreThen12Drinks] = useState(false);
 
   const history = useHistory();
+  const { pathname } = history.location;
 
-  const searcMeals = async () => {
+  const searchMeals = async () => {
+    let data = [];
     if (radioSearch === 'ingredient') {
-      const data = await fetchMealsIngredient(searchInput);
-      setTop12Meals(data.meals.slice(0, MAX12));
+      data = await fetchMealsIngredient(searchInput);
     } if (radioSearch === 'name') {
-      const data = await fetchMealsNameSearch(searchInput);
-      setTop12Meals(data.meals.slice(0, MAX12));
+      data = await fetchMealsNameSearch(searchInput);
     } if (radioSearch === 'firstLetter') {
+      const inputArray = searchInput.split('');
+      data = await fetchMealsFirstLetter(inputArray[0]);
       if (searchInput.length > 1) {
-        global.alert('If you choose option "first Letter", type only one letter');
-      } else {
-        const data = await fetchMealsFirstLetter(searchInput);
-        setTop12Meals(data.meals.slice(0, MAX12));
+        global.alert('Your search must have only 1 (one) character');
       }
     }
-    if (data.meals.length === 1) {
-      history.push('/meals/52771'); // utilizando um id para teste => 52771
+
+    if (data.meals === null || data.meals === undefined) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    } else if (data.meals.length === 1) {
+      history.push(`/meals/${data.meals[0].idMeal}`);
     } else if (data.meals.length > 1) {
       setMoreThen12Meals(true);
-    } else {
-      global.alert('No recipe was found');
+      setTop12Meals(data.meals);
     }
   };
 
   const searchDrinks = async () => {
+    let data = [];
     if (radioSearch === 'ingredient') {
-      const data = await fetchDrinksIngredient(searchInput);
-      setTop12Drinks(data.drinks.slice(0, MAX12));
+      data = await fetchDrinksIngredient(searchInput);
     } if (radioSearch === 'name') {
-      const data = await fetchDrinksNameSearch(searchInput);
-      setTop12Drinks(data.drinks.slice(0, MAX12));
+      data = await fetchDrinksNameSearch(searchInput);
     } if (radioSearch === 'firstLetter') {
+      const inputArray = searchInput.split('');
+      data = await fetchDrinksFirstLetter(inputArray[0]);
       if (searchInput.length > 1) {
-        global.alert(searchInput);
-      } else {
-        const data = await fetchDrinksFirstLetter(searchInput);
-        setTop12Drinks(data.drinks.slice(0, MAX12));
+        global.alert('Your search must have only 1 (one) character');
       }
     }
-    if (data.drinks.length === 1) {
-      history.push('/meals/178319'); // utilizando um id para teste => :id-da-receita
-    } else if (data.drinks.length > 1) {
-      setMoreThen12Drinks(true);
-    } else {
+
+    if (data.drinks === null || data.drinks === undefined) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    } else if (data.drinks.length === 1) {
+      history.push(`/drinks/${data.drinks[0].idDrink}`);
+    } else if (data.drinks.length > 1) {
+      setTop12Drinks(data.drinks);
+      setMoreThen12Drinks(true);
     }
   };
 
-  const handleClickSearch = async () => {
-    if (pathname === '/meals') {
-      searcMeals();
-    } else if (pathname === '/drinks') {
-      searchDrinks();
+  const handleClickSearch = () => {
+    if (searchInput.length > 0) {
+      if (pathname === '/meals') {
+        searchMeals();
+      } else if (pathname === '/drinks') {
+        searchDrinks();
+      }
     }
   };
 
@@ -83,7 +86,7 @@ function SearchBar() {
         <input
           name="searchInput"
           data-testid="search-input"
-          placeholder="Pesquise aqui"
+          placeholder="Search"
           onChange={ ({ target }) => setSeachInput(target.value) }
         />
         <label>
@@ -91,7 +94,7 @@ function SearchBar() {
           <input
             type="radio"
             name="search"
-            data-testid="ingredient-search-bar"
+            data-testid="ingredient-search-radio"
             value="ingredient"
             onChange={ ({ target }) => setsetRadioSearch(target.value) }
           />
@@ -117,7 +120,8 @@ function SearchBar() {
           />
         </label>
         <button
-          type="exec-search-btn"
+          data-testid="exec-search-btn"
+          type="button"
           onClick={ handleClickSearch }
         >
           Search
@@ -126,13 +130,18 @@ function SearchBar() {
       {
         moreThen12Meals
           && (
-            top12Meals.map((top, index) => (
-              <div key={ index } data-testid={ `${index}-recipe-card` }>
-                <p data-testid={ `${index}-card-name` }>topMeal.strMeal</p>
+            top12Meals.slice(0, MAX12).map((topMeal, index) => (
+              <div
+                style={ { display: 'inline-block' } }
+                key={ index }
+                data-testid={ `${index}-recipe-card` }
+              >
+                <p data-testid={ `${index}-card-name` }>{topMeal.strMeal}</p>
                 <img
                   data-testid={ `${index}-card-img` }
                   src={ topMeal.strMealThumb }
-                  alt="iamgem da receita"
+                  alt="recipe"
+                  style={ { height: '100px', width: '100px' } }
                 />
               </div>
             ))
@@ -142,13 +151,18 @@ function SearchBar() {
       {
         moreThen12Drinks
           && (
-            top12Drinks.map((top, index) => (
-              <div key={ index } data-testid={ `${index}-recipe-card` }>
-                <p data-testid={ `${index}-card-name` }>topDrink.strDrink</p>
+            top12Drinks.slice(0, MAX12).map((topDrink, index) => (
+              <div
+                style={ { display: 'inline-block' } }
+                key={ index }
+                data-testid={ `${index}-recipe-card` }
+              >
+                <p data-testid={ `${index}-card-name` }>{topDrink.strDrink}</p>
                 <img
                   data-testid={ `${index}-card-img` }
                   src={ topDrink.strDrinkThumb }
-                  alt="iamgem da receita"
+                  alt="recipe"
+                  style={ { height: '100px', width: '100px' } }
                 />
               </div>
             ))
