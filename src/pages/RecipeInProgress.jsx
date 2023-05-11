@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { arrlen20, arrlen15 } from '../util/arrAux';
 import IngredientStep from '../components/IngredientStep';
+import styles from './RecipeInProgress.module.css';
 
 export default function RecipeInProgress() {
   const [recipe, setRecipe] = useState({});
@@ -35,6 +36,7 @@ export default function RecipeInProgress() {
   return (
     <div>
       <img
+        className={ styles.img }
         data-testid="recipe-photo"
         src={ isMeals ? recipe.strMealThumb : recipe.strDrinkThumb }
         alt={ isMeals ? recipe.strMeal : recipe.strDrink }
@@ -61,11 +63,11 @@ export default function RecipeInProgress() {
       <p data-testid="instructions">
         {recipe.strInstructions}
       </p>
-
-      {listIngredients.map((item, index) => {
-        const ingredient = `strIngredient${item}`;
-        const measure = `strMeasure${item}`;
-        return recipe[ingredient]
+      <div className={ styles.bode }>
+        {listIngredients.map((item, index) => {
+          const ingredient = `strIngredient${item}`;
+          const measure = `strMeasure${item}`;
+          return recipe[ingredient]
           && (
             <IngredientStep
               index={ index }
@@ -74,7 +76,8 @@ export default function RecipeInProgress() {
             />
 
           );
-      })}
+        })}
+      </div>
 
       <button
         type="button"
