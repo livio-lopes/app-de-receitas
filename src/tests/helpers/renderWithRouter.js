@@ -1,6 +1,7 @@
-import { createMemoryHistory } from 'history';
+import React from 'react';
 import { render } from '@testing-library/react';
 import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 
 function withRouter(component, history) {
   return (
@@ -10,7 +11,7 @@ function withRouter(component, history) {
   );
 }
 
-export default function renderWithRouter(
+export function renderWithRouter(
   component,
   {
     initialEntries = ['/'],
@@ -22,3 +23,5 @@ export default function renderWithRouter(
     history,
   };
 }
+
+export default renderWithRouter;
