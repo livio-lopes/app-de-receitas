@@ -110,7 +110,7 @@ export function RecipeDetailsProvider({ children }) {
         setMensures(arrayMensures);
       }
     } catch (error) {
-      console.log('caiu no catch', error);
+      console.log('caiu no catch - erro:', error);
     }
   }, []);
 
