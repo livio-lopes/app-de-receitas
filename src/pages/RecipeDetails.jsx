@@ -95,8 +95,19 @@ export default function RecipeDetails() {
 
   const mockDoneLocalStorage = () => {
     let tagsArray;
+    let TwoTags;
+    console.log(types);
     if (tag) {
-      tagsArray = tag.split(',');
+      if (types === 'meal') {
+        tagsArray = tag.split(',');
+        TwoTags = tagsArray.slice(0, 2);
+        console.log('cortei o array para carnes');
+      }
+
+      if (types === 'drink') {
+        tagsArray = tag.split(',');
+        console.log('não cortei pois é drinks');
+      }
     }
     console.log(tagsArray || tag);
 
@@ -109,7 +120,7 @@ export default function RecipeDetails() {
       name: title,
       image: imageSource,
       doneDate: new Date(),
-      tags: tagsArray || tag,
+      tags: TwoTags || tagsArray,
     };
       // Verifica se já existe um valor armazenado para a chave 'doneRecipes'
     const existingDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
