@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { AppProvider } from './providers/AppProvider';
 import { RecipesProvider } from './providers/RecipesProvider';
+import { RecipeDetailsProvider } from './providers/RecipeDetailsProvider';
+
+import './index.css';
 
 ReactDOM
   .createRoot(document.getElementById('root'))
@@ -13,7 +15,9 @@ ReactDOM
     <BrowserRouter>
       <AppProvider>
         <RecipesProvider>
-          <App />
+          <RecipeDetailsProvider>
+            <App />
+          </RecipeDetailsProvider>
         </RecipesProvider>
       </AppProvider>
     </BrowserRouter>,

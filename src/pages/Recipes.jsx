@@ -3,11 +3,13 @@ import Card from '../components/Card';
 import styles from './Recipes.module.css';
 import SearchButtons from '../components/SeachButtons';
 import { RecipesContext } from '../providers/RecipesProvider';
+import Header from '../components/Header';
 
 export default function Recipes() {
   const { recipes } = useContext(RecipesContext);
   return (
     <div>
+      <Header />
       <SearchButtons />
       <div className={ styles.flex }>
         {recipes.length > 0 && recipes.map((recipe, index) => (
@@ -18,9 +20,7 @@ export default function Recipes() {
             data-testid={ `${index}-card-img` }
           />
         ))}
-
       </div>
     </div>
-
   );
 }
