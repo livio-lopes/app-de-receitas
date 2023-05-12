@@ -27,6 +27,9 @@ export default function RecipeDetails() {
     startButton,
     idFood,
     setStartButton,
+    tag,
+    types,
+    nationality,
   } = useContext(RecipeDetailsContext);
 
   // definição da receita de acordo com a rota - IDs será parametro de colectMealData e ColectDrinkData;
@@ -91,8 +94,31 @@ export default function RecipeDetails() {
   }, [checkInProgressLocalStorage, checkDoneLocalStorage]);
 
   const mockDoneLocalStorage = () => {
-    const doneRecipesModel = [{ id: idFood }];
-    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesModel));
+    let tagsArray;
+    if (tag) {
+      tagsArray = tag.split(',');
+    }
+    console.log(tagsArray || tag);
+
+    const doneRecipesModel = {
+      id: idFood,
+      type: types,
+      nationality,
+      category: categoryText,
+      alcoholicOrNot: alcoholic,
+      name: title,
+      image: imageSource,
+      doneDate: new Date(),
+      tags: tagsArray || tag,
+    };
+      // Verifica se já existe um valor armazenado para a chave 'doneRecipes'
+    const existingDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+
+    // Adiciona a nova receita à lista existente de receitas concluídas
+    const updatedDoneRecipes = [...existingDoneRecipes, doneRecipesModel];
+
+    // Armazena a lista atualizada de receitas concluídas no localStorage
+    localStorage.setItem('doneRecipes', JSON.stringify(updatedDoneRecipes));
   };
 
   const mockInProgressLocalStorage = () => {
