@@ -97,4 +97,3 @@ describe('Testando componente Header', () => {
     expect(await screen.findByTestId('11-recipe-card')).toBeInTheDocument();
   });
 });
-
