@@ -19,7 +19,7 @@ export default function Footer() {
           data-testid="drinks-bottom-btn"
           type="button"
           src={ drinkIcon }
-          alt="drink-icon"
+          alt="drinkIcon"
         />
       </button>
       <button
@@ -30,7 +30,7 @@ export default function Footer() {
           data-testid="meals-bottom-btn"
           type="button"
           src={ mealIcon }
-          alt="meal-icon"
+          alt="mealIcon"
         />
       </button>
     </div>
