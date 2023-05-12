@@ -8,26 +8,26 @@
 }
 
 .FavoriteBtnLabel {
+  align-items: center;
   display: flex;
+  height: 30px;
+  justify-content: center;
   position: relative;
   width: 30px;
-  height: 30px;
-  align-items: center;
-  justify-content: center;
 }
 
 .FavoriteBtnInput {
+  cursor: pointer;
+  height: 100%;
+  left: 0;
+  opacity: 0;
   position: absolute;
   top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
 }
 
 .FavoriteBtnIcon {
-  width: 100%;
   height: 100%;
   object-fit: contain;
+  width: 100%;
 }
