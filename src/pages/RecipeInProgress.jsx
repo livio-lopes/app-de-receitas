@@ -14,13 +14,11 @@ export default function RecipeInProgress() {
   useEffect(() => {
     if (location.pathname.includes('meals')) {
       const URL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`;
-      fetch(URL)
-        .then((response) => response.json())
-        .then((data) => {
-          setIsMeals(true);
-          setRecipe(data.meals[0]);
-          setListIngredients(arrlen20);
-        });
+      fetch(URL).then((response) => response.json()).then((data) => {
+        setIsMeals(true);
+        setRecipe(data.meals[0]);
+        setListIngredients(arrlen20);
+      });
     }
     if (location.pathname.includes('drinks')) {
       const URL = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${recipeId}`;
@@ -61,7 +59,7 @@ export default function RecipeInProgress() {
         {recipe.strTags}
       </p>
       <p data-testid="instructions">
-        {recipe.strInstructions}
+        {`${recipe.strInstructions}`}
       </p>
       <div className={ styles.bode }>
         {listIngredients.map((item, index) => {
