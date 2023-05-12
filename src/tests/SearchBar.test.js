@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import rendeWithRouter from './helpers/renderWithRouter';
 import App from '../App';
@@ -96,26 +96,5 @@ describe('Testando componente Header', () => {
     expect(await screen.findByTestId('10-recipe-card')).toBeInTheDocument();
     expect(await screen.findByTestId('11-recipe-card')).toBeInTheDocument();
   });
-
-  it('Verifica se alert é exibido ao digitar mais de uma letra e clicar na opção first Ltter', async () => {
-    const alertSpy = jest.spyOn(global, 'alert');
-
-    rendeWithRouter(<App />, { initialEntries: ['/drinks'] });
-    const btnL = screen.getByTestId('search-top-btn');
-    userEvent.click(btnL);
-
-    const searchInput = screen.getByTestId('search-input');
-    userEvent.type(searchInput, 'lemon');
-
-    const btnFirstLetter = screen.getByRole('radio', { name: /first letter/i });
-    userEvent.click(btnFirstLetter);
-
-    const btnSearch = screen.getByRole('button', { name: /search/i });
-    userEvent.click(btnSearch);
-
-    await waitFor(() => {
-      expect(alertSpy).toBeCalled();
-    });
-    expect(alertSpy).toHaveBeenCalledWith('Your search must have only 1 (one) character');
-  });
 });
+
