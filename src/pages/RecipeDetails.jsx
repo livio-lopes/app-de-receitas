@@ -189,7 +189,15 @@ export default function RecipeDetails() {
         trigger localStorageInProgress test
 
       </button>
-      <button onClick={ checkInProgressLocalStorage }>trigger checklocal test</button>
+      <button
+        onClick={ () => {
+          checkInProgressLocalStorage();
+          checkDoneLocalStorage();
+        } }
+      >
+        trigger checklocal test
+
+      </button>
     </div>
   );
 }
