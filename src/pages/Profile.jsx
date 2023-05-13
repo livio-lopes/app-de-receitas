@@ -12,7 +12,7 @@ export default function Profile() {
   };
 
   const handleLogout = () => {
-    localStorage.setItem('user', JSON.stringify({ email: '' }));
+    localStorage.clear();
     history.push('/');
   };
 
@@ -23,14 +23,14 @@ export default function Profile() {
       <button
         data-testid="profile-done-btn"
         type="button"
-        onClick={ history.push('/done-recipes') }
+        onClick={ () => history.push('/done-recipes') }
       >
         Done Recipes
       </button>
       <button
         data-testid="profile-favorite-btn"
         type="button"
-        onClick={ history.push('/favorite-recipes') }
+        onClick={ () => history.push('/favorite-recipes') }
       >
         Favorite Recipes
       </button>
@@ -41,6 +41,7 @@ export default function Profile() {
       >
         Logout
       </button>
+
     </div>
   );
 }
