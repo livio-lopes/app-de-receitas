@@ -4,6 +4,7 @@ import styles from './Recipes.module.css';
 import SearchButtons from '../components/SeachButtons';
 import { RecipesContext } from '../providers/RecipesProvider';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export default function Recipes() {
   const { recipes } = useContext(RecipesContext);
@@ -21,6 +22,7 @@ export default function Recipes() {
           />
         ))}
       </div>
+      <Footer />
     </div>
   );
 }
