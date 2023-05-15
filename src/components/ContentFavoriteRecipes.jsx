@@ -7,15 +7,13 @@ import shareIcon from '../images/shareIcon.svg';
 const copy = require('clipboard-copy');
 
 function ContentFavoriteRecipes() {
-  const [isFavorite, setIsFavorite] = useState(false);
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
 
   useEffect(() => {
     const getFavoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
-    if (getFavoriteRecipes) {
+    if (getFavoriteRecipes.length > 0) {
       setFavoriteRecipes(getFavoriteRecipes);
-      setIsFavorite(true);
     }
   }, []);
 
@@ -28,7 +26,7 @@ function ContentFavoriteRecipes() {
       const pageLink = window.location.href;
       copy(pageLink);
     } else {
-      // lógica do botão favoritar
+      // lógica do botão desfavoritar
     }
   };
 
@@ -54,7 +52,7 @@ function ContentFavoriteRecipes() {
       </section>
 
       {
-        isFavorite ? (
+        favoriteRecipes.length > 0 ? (
           favoriteRecipes.map((favoriteRecipe, index) => (
             <section key={ `recipe${index + 1}` }>
               <img
@@ -66,7 +64,11 @@ function ContentFavoriteRecipes() {
               <p
                 data-testid={ `${index}-horizontal-top-text` }
               >
-                { favoriteRecipe.category }
+                {
+                  favoriteRecipe.type === 'meal' ? `${favoriteRecipe
+                    .nationality} - ${favoriteRecipe.category}`
+                    : favoriteRecipe.alcoholicOrNot
+                }
               </p>
               <h2
                 data-testid={ `${index}-horizontal-name` }
@@ -74,17 +76,21 @@ function ContentFavoriteRecipes() {
                 { favoriteRecipe.name }
               </h2>
               <div className="ContainerBtns">
-                <button
-                  data-testid={ `${index}-horizontal-share-btn` }
-                  name="shareBtn"
-                  onClick={ handleShareOrFavorite }
-                >
+                <label>
+                  <input
+                    data-testid={ `${index}-horizontal-share-btn` }
+                    className="ShareBtnInput"
+                    type="button"
+                    name="shareBtn"
+                    src={ shareIcon }
+                    onClick={ handleShareOrFavorite }
+                  />
                   <img
-                    className="ShareIcon"
+                    className="ShareBtnIcon"
                     src={ shareIcon }
                     alt="ícone de compartilhar"
                   />
-                </button>
+                </label>
                 <label className="FavoriteBtnLabel">
                   <input
                     data-testid={ `${index}-horizontal-favorite-btn` }
