@@ -4,8 +4,8 @@ import RecipeDetails from '../pages/RecipeDetails';
 import { renderWithRouter } from './helpers/renderWithRouter';
 import { AppProvider } from '../providers/AppProvider';
 import { RecipeDetailsProvider } from '../providers/RecipeDetailsProvider';
-import mealId52771 from '../mocks/mealId52771';
-import drinkId178319 from '../mocks/drinkId178319';
+import mealId52771 from './mocks/mealId52771';
+import drinkId178319 from './mocks/drinkId178319';
 // import drinksRecommendations from '../mocks/drinksRecommendations';
 // import mealsRecommendations from '../mocks/mealsRecommendations';
 
