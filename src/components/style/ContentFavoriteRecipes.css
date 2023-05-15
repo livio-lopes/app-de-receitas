@@ -1,9 +1,15 @@
+.RecipeImage {
+  height: 160px;
+  width: 160px;
+}
+
 .ContainerBtns {
   display: flex;
   gap: 10px;
+  margin: 10px;
 }
 
-.FavoriteBtnLabel, .ShareBtnLabel {
+.FavoriteBtnLabel {
   align-items: center;
   display: flex;
   height: 30px;
@@ -12,7 +18,7 @@
   width: 30px;
 }
 
-.FavoriteBtnInput, .ShareBtnInput {
+.FavoriteBtnInput {
   cursor: pointer;
   height: 100%;
   left: 0;
@@ -22,7 +28,7 @@
   width: 100%;
 }
 
-.FavoriteBtnIcon, .ShareBtnIcon {
+.FavoriteBtnIcon {
   height: 100%;
   object-fit: contain;
   width: 100%;
