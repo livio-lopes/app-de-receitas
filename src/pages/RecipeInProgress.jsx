@@ -6,10 +6,21 @@ import styles from './RecipeInProgress.module.css';
 
 export default function RecipeInProgress() {
   const [recipe, setRecipe] = useState({});
+  const [typeRecipe, setTypeRecipe] = useState('');
   const [listIngredients, setListIngredients] = useState([]);
   const [isMeals, setIsMeals] = useState(true);
   const { recipeId } = useParams();
   const location = useLocation();
+
+  const haveProgress = (type, typeId, index) => {
+    const id = typeId ? recipe.idMeal : recipe.idDrink;
+    const noProgress = false;
+    return localStorage.getItem('inProgressRecipes') ? () => {
+      const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const listProgress = progress[type][id].some((item) => item === index);
+      return listProgress;
+    } : noProgress;
+  };
 
   useEffect(() => {
     if (location.pathname.includes('meals')) {
@@ -18,6 +29,7 @@ export default function RecipeInProgress() {
         setIsMeals(true);
         setRecipe(data.meals[0]);
         setListIngredients(arrlen20);
+        setTypeRecipe('meals');
       });
     }
     if (location.pathname.includes('drinks')) {
@@ -28,6 +40,7 @@ export default function RecipeInProgress() {
           setIsMeals(false);
           setRecipe(data.drinks[0]);
           setListIngredients(arrlen15);
+          setTypeRecipe('drinks');
         });
     }
   }, [setRecipe, recipeId, location.pathname]);
@@ -68,6 +81,10 @@ export default function RecipeInProgress() {
           return recipe[ingredient]
           && (
             <IngredientStep
+              key={ index }
+              type={ typeRecipe }
+              id={ isMeals ? recipe.idMeal : recipe.idDrink }
+              haveProgress={ haveProgress(typeRecipe, isMeals, index) }
               index={ index }
               ingredient={ recipe[ingredient] }
               measure={ recipe[measure] }
