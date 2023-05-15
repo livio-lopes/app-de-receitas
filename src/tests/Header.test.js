@@ -16,12 +16,12 @@ describe('Testando componente Header', () => {
   });
   it('Testa se o botão da barra de pesquisa são renderizados', () => {
     rendeWithRouter(<App />, { initialEntries: ['/meals'] });
-    const btnSearch = screen.getByRole('button', { name: /search/i });
-    expect(btnSearch).toBeInTheDocument();
-    userEvent.click(btnSearch);
-    const inputSearch = screen.getByTestId('search-input');
+    const btnPesquisa = screen.getByRole('button', { name: /pesquisa/i });
+    expect(btnPesquisa).toBeInTheDocument();
+    userEvent.click(btnPesquisa);
+    const inputSearch = screen.queryByTestId('search-input');
     expect(inputSearch).toBeInTheDocument();
-    userEvent.click(btnSearch);
+    userEvent.click(btnPesquisa);
     expect(inputSearch).not.toBeInTheDocument();
   });
   it('Testa se ao clicar no ícone de perfil é redirecionado para a rota /profile', () => {
