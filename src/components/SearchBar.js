@@ -12,7 +12,7 @@ import {
 const MAX12 = 12;
 
 function SearchBar() {
-  const [searchInput, setSeachInput] = useState('');
+  const [searchInput, setSearchInput] = useState('');
   const [radioSearch, setsetRadioSearch] = useState(null);
   const [top12Meals, setTop12Meals] = useState([]);
   const [top12Drinks, setTop12Drinks] = useState([]);
@@ -85,9 +85,10 @@ function SearchBar() {
       <form>
         <input
           name="searchInput"
+          value={ searchInput }
           data-testid="search-input"
           placeholder="Search"
-          onChange={ ({ target }) => setSeachInput(target.value) }
+          onChange={ ({ target }) => setSearchInput(target.value) }
         />
         <label>
           Ingredient
