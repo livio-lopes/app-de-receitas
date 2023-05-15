@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   fetchMealsIngredient,
@@ -8,17 +8,15 @@ import {
   fetchDrinksNameSearch,
   fetchDrinksFirstLetter,
 } from '../hooks/useFetch';
+import { RecipesContext } from '../providers/RecipesProvider';
 
-const MAX12 = 12;
+const MAX_RECIPES = 12;
 
 function SearchBar() {
+  const { setRecipes } = useContext(RecipesContext);
+
   const [searchInput, setSearchInput] = useState('');
   const [radioSearch, setsetRadioSearch] = useState(null);
-  const [top12Meals, setTop12Meals] = useState([]);
-  const [top12Drinks, setTop12Drinks] = useState([]);
-  const [moreThen12Meals, setMoreThen12Meals] = useState(false);
-  const [moreThen12Drinks, setMoreThen12Drinks] = useState(false);
-
   const history = useHistory();
   const { pathname } = history.location;
 
@@ -41,8 +39,7 @@ function SearchBar() {
     } else if (data.meals.length === 1) {
       history.push(`/meals/${data.meals[0].idMeal}`);
     } else if (data.meals.length > 1) {
-      setMoreThen12Meals(true);
-      setTop12Meals(data.meals);
+      setRecipes(data.meals.slice(0, MAX_RECIPES));
     }
   };
 
@@ -65,8 +62,7 @@ function SearchBar() {
     } else if (data.drinks.length === 1) {
       history.push(`/drinks/${data.drinks[0].idDrink}`);
     } else if (data.drinks.length > 1) {
-      setTop12Drinks(data.drinks);
-      setMoreThen12Drinks(true);
+      setRecipes(data.drinks.slice(0, MAX_RECIPES));
     }
   };
 
@@ -81,95 +77,52 @@ function SearchBar() {
   };
 
   return (
-    <>
-      <form>
+    <form>
+      <input
+        name="searchInput"
+        value={ searchInput }
+        data-testid="search-input"
+        placeholder="Search"
+        onChange={ ({ target }) => setSearchInput(target.value) }
+      />
+      <label>
+        Ingredient
         <input
-          name="searchInput"
-          value={ searchInput }
-          data-testid="search-input"
-          placeholder="Search"
-          onChange={ ({ target }) => setSearchInput(target.value) }
+          type="radio"
+          name="search"
+          data-testid="ingredient-search-radio"
+          value="ingredient"
+          onChange={ ({ target }) => setsetRadioSearch(target.value) }
         />
-        <label>
-          Ingredient
-          <input
-            type="radio"
-            name="search"
-            data-testid="ingredient-search-radio"
-            value="ingredient"
-            onChange={ ({ target }) => setsetRadioSearch(target.value) }
-          />
-        </label>
-        <label>
-          Name
-          <input
-            type="radio"
-            name="search"
-            data-testid="name-search-radio"
-            value="name"
-            onChange={ ({ target }) => setsetRadioSearch(target.value) }
-          />
-        </label>
-        <label>
-          First letter
-          <input
-            type="radio"
-            name="search"
-            data-testid="first-letter-search-radio"
-            value="firstLetter"
-            onChange={ ({ target }) => setsetRadioSearch(target.value) }
-          />
-        </label>
-        <button
-          data-testid="exec-search-btn"
-          type="button"
-          onClick={ handleClickSearch }
-        >
-          Search
-        </button>
-      </form>
-      {
-        moreThen12Meals
-          && (
-            top12Meals.slice(0, MAX12).map((topMeal, index) => (
-              <div
-                style={ { display: 'inline-block' } }
-                key={ index }
-                data-testid={ `${index}-recipe-card` }
-              >
-                <p data-testid={ `${index}-card-name` }>{topMeal.strMeal}</p>
-                <img
-                  data-testid={ `${index}-card-img` }
-                  src={ topMeal.strMealThumb }
-                  alt="recipe"
-                  style={ { height: '100px', width: '100px' } }
-                />
-              </div>
-            ))
-          )
-      }
-
-      {
-        moreThen12Drinks
-          && (
-            top12Drinks.slice(0, MAX12).map((topDrink, index) => (
-              <div
-                style={ { display: 'inline-block' } }
-                key={ index }
-                data-testid={ `${index}-recipe-card` }
-              >
-                <p data-testid={ `${index}-card-name` }>{topDrink.strDrink}</p>
-                <img
-                  data-testid={ `${index}-card-img` }
-                  src={ topDrink.strDrinkThumb }
-                  alt="recipe"
-                  style={ { height: '100px', width: '100px' } }
-                />
-              </div>
-            ))
-          )
-      }
-    </>
+      </label>
+      <label>
+        Name
+        <input
+          type="radio"
+          name="search"
+          data-testid="name-search-radio"
+          value="name"
+          onChange={ ({ target }) => setsetRadioSearch(target.value) }
+        />
+      </label>
+      <label>
+        First letter
+        <input
+          type="radio"
+          name="search"
+          data-testid="first-letter-search-radio"
+          value="firstLetter"
+          onChange={ ({ target }) => setsetRadioSearch(target.value) }
+        />
+      </label>
+      <button
+        data-testid="exec-search-btn"
+        type="button"
+        onClick={ handleClickSearch }
+      >
+        Search
+      </button>
+    </form>
   );
 }
 export default SearchBar;
