@@ -17,6 +17,8 @@ export function RecipeDetailsProvider({ children }) {
   const [nationality, setNationality] = useState('');
   const [objectDetails, setObjectDetails] = useState({});
   const [startButton, setStartButton] = useState('Start Recipe');
+  const [types, setType] = useState('');
+  const [tag, setTag] = useState();
 
   const colectDrinkData = useCallback(async (id) => {
     // const idCyPress = 178319;
@@ -38,6 +40,7 @@ export function RecipeDetailsProvider({ children }) {
           strInstructions,
           idDrink,
           strCategory,
+          strTags,
         } = dataDrinks.drinks[0];
         setCategoryText(strCategory);
         setIdFood(idDrink);
@@ -45,6 +48,8 @@ export function RecipeDetailsProvider({ children }) {
         setTitle(strDrink);
         setAlcoholic(strAlcoholic);
         setInstructionsText(strInstructions);
+        setType('drink');
+        setTag(strTags);
 
         // coletar ingredientes da api de carnes
         const limitAPI = 15;
@@ -80,13 +85,15 @@ export function RecipeDetailsProvider({ children }) {
       if (dataFoods.meals !== null) {
         console.log('comida nesse id:', dataFoods.meals[0]);
         const { strMealThumb, strMeal, strCategory, strInstructions,
-          strYoutube, idMeal, strArea } = dataFoods.meals[0];
+          strYoutube, idMeal, strArea, strTags } = dataFoods.meals[0];
         setIdFood(idMeal);
         setNationality(strArea);
         setImageSource(strMealThumb);
         setTitle(strMeal);
         setCategoryText(strCategory);
         setInstructionsText(strInstructions);
+        setType('meal');
+        setTag(strTags);
 
         // id dos videos do youtube
         const regex = /v=([^&]+)/;
@@ -110,7 +117,7 @@ export function RecipeDetailsProvider({ children }) {
         setMensures(arrayMensures);
       }
     } catch (error) {
-      console.log('caiu no catch', error);
+      console.log('caiu no catch - erro:', error);
     }
   }, []);
 
@@ -169,6 +176,8 @@ export function RecipeDetailsProvider({ children }) {
     colectMealData,
     startButton,
     setStartButton,
+    types,
+    tag,
   }), [
     imageSource, setImageSource,
     title, setTitle,
@@ -184,6 +193,7 @@ export function RecipeDetailsProvider({ children }) {
     setMealObject, setDrinkObject,
     colectDrinkData, colectMealData,
     startButton, setStartButton,
+    types, tag,
   ]);
 
   return (

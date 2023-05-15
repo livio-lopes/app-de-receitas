@@ -27,6 +27,9 @@ export default function RecipeDetails() {
     startButton,
     idFood,
     setStartButton,
+    tag,
+    types,
+    nationality,
   } = useContext(RecipeDetailsContext);
 
   // definição da receita de acordo com a rota - IDs será parametro de colectMealData e ColectDrinkData;
@@ -34,19 +37,17 @@ export default function RecipeDetails() {
   const history = useHistory();
   const actualPath = location.pathname;
   const IDs = actualPath.replace(/\D/g, '');
-  console.log('ronaldo id:', IDs);
+  console.log('id da comida:', IDs);
 
   const chooseAPI = useCallback(() => {
     if (actualPath.includes('/meals')) {
       colectMealData(IDs);
       setMealObject();
-      console.log('mealdata chamado');
     }
 
     if (actualPath.includes('/drinks')) {
       colectDrinkData(IDs);
       setDrinkObject();
-      console.log('drinkdata chamado');
     }
   }, [actualPath,
     setMealObject,
@@ -57,23 +58,19 @@ export default function RecipeDetails() {
   ]);
 
   const checkDoneLocalStorage = useCallback(() => {
-    console.log('checkDoneLocalStorage');
     const getArrayStorage = JSON.parse(localStorage.getItem('doneRecipes'));
     if (getArrayStorage) {
       const Boolean = getArrayStorage.some((object) => (object.id === IDs));
 
       if (Boolean) {
         setRecipeDone(true);
-        console.log('caiu no true');
       } else {
-        console.log('caiu no false');
         setRecipeDone(false);
       }
     }
   }, [IDs]);
 
   const checkInProgressLocalStorage = useCallback(() => {
-    console.log('checkInProgressLocalStorage');
     const getObjectInProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (actualPath.includes('/meals') && getObjectInProgress
     && Object.keys(getObjectInProgress.meals).includes(IDs)) {
@@ -97,8 +94,42 @@ export default function RecipeDetails() {
   }, [checkInProgressLocalStorage, checkDoneLocalStorage]);
 
   const mockDoneLocalStorage = () => {
-    const doneRecipesModel = [{ id: idFood }];
-    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipesModel));
+    let tagsArray;
+    let TwoTags;
+    console.log(types);
+    if (tag) {
+      if (types === 'meal') {
+        tagsArray = tag.split(',');
+        TwoTags = tagsArray.slice(0, 2);
+        console.log('cortei o array para carnes');
+      }
+
+      if (types === 'drink') {
+        tagsArray = tag.split(',');
+        console.log('não cortei pois é drinks');
+      }
+    }
+    console.log(tagsArray || tag);
+
+    const doneRecipesModel = {
+      id: idFood,
+      type: types,
+      nationality,
+      category: categoryText,
+      alcoholicOrNot: alcoholic,
+      name: title,
+      image: imageSource,
+      doneDate: new Date(),
+      tags: TwoTags || tagsArray,
+    };
+      // Verifica se já existe um valor armazenado para a chave 'doneRecipes'
+    const existingDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+
+    // Adiciona a nova receita à lista existente de receitas concluídas
+    const updatedDoneRecipes = [...existingDoneRecipes, doneRecipesModel];
+
+    // Armazena a lista atualizada de receitas concluídas no localStorage
+    localStorage.setItem('doneRecipes', JSON.stringify(updatedDoneRecipes));
   };
 
   const mockInProgressLocalStorage = () => {
@@ -112,7 +143,6 @@ export default function RecipeDetails() {
     };
     if (actualPath.includes('/meals')) { inProgressModel.meals[idFood] = ingredients; }
     if (actualPath.includes('/drinks')) { inProgressModel.drinks[idFood] = ingredients; }
-    console.log(inProgressModel);
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressModel));
   };
 
