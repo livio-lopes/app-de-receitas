@@ -6,6 +6,7 @@ import { AppProvider } from '../providers/AppProvider';
 import { RecipeDetailsProvider } from '../providers/RecipeDetailsProvider';
 import mealId52771 from './mocks/mealId52771';
 import drinkId178319 from './mocks/drinkId178319';
+import { RecipesProvider } from '../providers/RecipesProvider';
 // import drinksRecommendations from '../mocks/drinksRecommendations';
 // import mealsRecommendations from '../mocks/mealsRecommendations';
 
@@ -23,9 +24,11 @@ describe('Testa a page RecipeDetails no endereço /meals/52771', () => {
     await act(async () => {
       renderWithRouter(
         <AppProvider>
-          <RecipeDetailsProvider>
-            <RecipeDetails />
-          </RecipeDetailsProvider>
+          <RecipesProvider>
+            <RecipeDetailsProvider>
+              <RecipeDetails />
+            </RecipeDetailsProvider>
+          </RecipesProvider>
         </AppProvider>,
         { initialEntries: [mealsPath] },
       );
