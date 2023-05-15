@@ -36,9 +36,9 @@ function Header() {
       <button
         type="submit"
         onClick={ () => push('/profile') }
-        data-testid="profile-top-btn"
       >
         <img
+          data-testid="profile-top-btn"
           src={ profileIcon }
           alt="perfil"
         />
@@ -49,9 +49,9 @@ function Header() {
           <button
             type="button"
             onClick={ handleSearchBar }
-            data-testid="search-top-btn"
           >
             <img
+              data-testid="search-top-btn"
               src={ searchIcon }
               alt="pesquisa"
             />
