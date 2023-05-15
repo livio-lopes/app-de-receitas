@@ -3,11 +3,13 @@ import './style/ContentFavoriteRecipes.css';
 
 import blackHeart from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import LinkCopiedMessage from './LinkCopiedMessage';
 
 const copy = require('clipboard-copy');
 
 function ContentFavoriteRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+  const [statusLinkCopied, setStatusLinkCopied] = useState(false);
 
   useEffect(() => {
     const getFavoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -17,16 +19,21 @@ function ContentFavoriteRecipes() {
     }
   }, []);
 
-  const handleShareOrFavorite = (event) => {
+  const handleShareOrFavorite = (event, type, id) => {
     event.preventDefault();
 
     const { name } = event.target;
 
     if (name === 'shareBtn') {
-      const pageLink = window.location.href;
+      const url = window.location.href;
+      const splitURL = url.split('favorite-recipes');
+      const pageLink = `${splitURL[0]}${type}s/${id}`;
       copy(pageLink);
-    } else {
-      // lógica do botão desfavoritar
+      setStatusLinkCopied(true);
+    }
+
+    if (name === 'favoriteBtn') {
+      // Lógica do botão desfavoritar!
     }
   };
 
@@ -54,7 +61,7 @@ function ContentFavoriteRecipes() {
       {
         favoriteRecipes.length > 0 ? (
           favoriteRecipes.map((favoriteRecipe, index) => (
-            <section key={ `recipe${index + 1}` }>
+            <section key={ `recipe${index}` }>
               <img
                 className="RecipeImage"
                 data-testid={ `${index}-horizontal-image` }
@@ -76,14 +83,17 @@ function ContentFavoriteRecipes() {
                 { favoriteRecipe.name }
               </h2>
               <div className="ContainerBtns">
-                <label>
+                <label className="ShareBtnLabel">
                   <input
                     data-testid={ `${index}-horizontal-share-btn` }
                     className="ShareBtnInput"
                     type="button"
                     name="shareBtn"
                     src={ shareIcon }
-                    onClick={ handleShareOrFavorite }
+                    onClick={
+                      (e) => handleShareOrFavorite(e, favoriteRecipe
+                        .type, favoriteRecipe.id)
+                    }
                   />
                   <img
                     className="ShareBtnIcon"
@@ -112,6 +122,9 @@ function ContentFavoriteRecipes() {
           ))
         )
           : (null)
+      }
+      {
+        statusLinkCopied && <LinkCopiedMessage />
       }
     </section>
   );

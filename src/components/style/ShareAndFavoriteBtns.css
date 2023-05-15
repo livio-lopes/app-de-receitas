@@ -3,7 +3,7 @@
   gap: 10px;
 }
 
-.FavoriteBtnLabel {
+.FavoriteBtnLabel, .ShareBtnLabel {
   align-items: center;
   display: flex;
   height: 30px;
