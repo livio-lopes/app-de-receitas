@@ -128,5 +128,5 @@ CardDoneRecipes.propTypes = {
   tag: propTypes.arrayOf(propTypes.string).isRequired,
   alcoholicOrNot: propTypes.string.isRequired,
   type: propTypes.string.isRequired,
-  id: propTypes.number.isRequired,
+  id: propTypes.string.isRequired,
 };
