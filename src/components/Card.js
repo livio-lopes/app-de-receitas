@@ -1,15 +1,27 @@
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import styles from './Card.module.css';
+import { RecipesContext } from '../providers/RecipesProvider';
 
 export default function Card({ recipe, index }) {
   const location = useLocation();
   const rotaAtual = location.pathname;
+  const history = useHistory();
+  const { setId } = useContext(RecipesContext);
+
+  function redireciona() {
+    setId(recipe.idMeal ? recipe.idMeal : recipe.idDrink);
+    history.push(`${rotaAtual}/${recipe.idMeal ? recipe.idMeal : recipe.idDrink}`);
+  }
 
   return (
     <div className={ styles.cardImage }>
-      <Link to={ `${rotaAtual}/${recipe.idMeal ? recipe.idMeal : recipe.idDrink}` }>
-        <div data-testid={ `${index}-recipe-card` } className={ styles.cardImages }>
+      <div data-testid={ `${index}-recipe-card` } className={ styles.cardImages }>
+        <button
+          type="button"
+          onClick={ () => redireciona() }
+        >
           <img
             data-testid={ `${index}-card-img` }
             src={ recipe.strMealThumb ? recipe.strMealThumb : recipe.strDrinkThumb }
@@ -20,8 +32,8 @@ export default function Card({ recipe, index }) {
           >
             {recipe.strMeal ? recipe.strMeal : recipe.strDrink}
           </p>
-        </div>
-      </Link>
+        </button>
+      </div>
     </div>
   );
 }

@@ -17,16 +17,16 @@ export default function Routes() {
       <Route exact path="/profile" component={ Profile } />
       <Route exact path="/done-recipes" component={ DoneRecipes } />
       <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
-      <Route exact path="/meals/:id-da-receita" component={ RecipeDetails } />
-      <Route exact path="/drinks/:id-da-receita" component={ RecipeDetails } />
+      <Route exact path="/meals/:recipeId" component={ RecipeDetails } />
+      <Route exact path="/drinks/:recipeId" component={ RecipeDetails } />
       <Route
         exact
-        path="/meals/:id-da-receita/in-progress"
+        path="/meals/:recipeId/in-progress"
         component={ RecipeInProgress }
       />
       <Route
         exact
-        path="/drinks/:id-da-receita/in-progress"
+        path="/drinks/:recipeId/in-progress"
         component={ RecipeInProgress }
       />
 

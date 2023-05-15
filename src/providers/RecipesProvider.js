@@ -13,6 +13,7 @@ export function RecipesProvider({ children }) {
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState('');
+  const [id, setId] = useState('');
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -69,6 +70,8 @@ export function RecipesProvider({ children }) {
     categoryFilter,
     setCategoryFilter,
     fetchRecipesByCategory,
+    id,
+    setId,
   }), [
     recipes,
     setRecipes,
@@ -76,6 +79,8 @@ export function RecipesProvider({ children }) {
     setCategories,
     categoryFilter,
     setCategoryFilter,
+    id,
+    setId,
   ]);
 
   return (
