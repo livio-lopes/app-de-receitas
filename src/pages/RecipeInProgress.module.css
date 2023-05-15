@@ -1,4 +1,4 @@
-.container-ingredients {
+.container__ingredients {
   display: flex;
   flex-direction: column;
 }

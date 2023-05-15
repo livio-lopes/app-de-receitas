@@ -4,7 +4,12 @@ import styles from './IngredientStep.module.css';
 
 export default function IngredienteStep(props) {
   const [check, setCheck] = useState(false);
-  const { index, ingredient, measure, type, id } = props;
+  const { index,
+    ingredient,
+    measure, type,
+    id,
+    setStatusRecipe,
+    totalProgress } = props;
 
   useEffect(() => {
     const { haveProgress } = props;
@@ -28,6 +33,7 @@ export default function IngredienteStep(props) {
         [type]: { [id]: [...progress[type][id], index] },
       };
       localStorage.setItem('inProgressRecipes', JSON.stringify(attProgress));
+      setStatusRecipe(attProgress[type][id].length === totalProgress);
     }
     setCheck(!check);
   };
