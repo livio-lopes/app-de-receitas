@@ -6,10 +6,23 @@ import styles from './RecipeInProgress.module.css';
 
 export default function RecipeInProgress() {
   const [recipe, setRecipe] = useState({});
+  const [typeRecipe, setTypeRecipe] = useState('');
   const [listIngredients, setListIngredients] = useState([]);
   const [isMeals, setIsMeals] = useState(true);
+  const [totalProgress, setTotalProgress] = useState(0);
+  const [statusRecipe, setStatusRecipe] = useState(false);
   const { recipeId } = useParams();
   const location = useLocation();
+
+  const haveProgress = (type, typeId, index) => {
+    const id = typeId ? recipe.idMeal : recipe.idDrink;
+    const noProgress = false;
+    return localStorage.getItem('inProgressRecipes') ? () => {
+      const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      const listProgress = progress[type][id].some((item) => item === index);
+      return listProgress;
+    } : noProgress;
+  };
 
   useEffect(() => {
     if (location.pathname.includes('meals')) {
@@ -18,6 +31,10 @@ export default function RecipeInProgress() {
         setIsMeals(true);
         setRecipe(data.meals[0]);
         setListIngredients(arrlen20);
+        setTypeRecipe('meals');
+        setTotalProgress(arrlen20
+          .map((item) => recipe[`strIngredient${item}`])
+          .filter((item) => item).length);
       });
     }
     if (location.pathname.includes('drinks')) {
@@ -28,9 +45,14 @@ export default function RecipeInProgress() {
           setIsMeals(false);
           setRecipe(data.drinks[0]);
           setListIngredients(arrlen15);
+          setTypeRecipe('drinks');
+          setTotalProgress(arrlen15
+            .map((item) => recipe[`strIngredient${item}`])
+            .filter((item) => item).length);
         });
     }
-  }, [setRecipe, recipeId, location.pathname]);
+  }, [setRecipe, recipeId, location.pathname, recipe]);
+
   return (
     <div>
       <img
@@ -61,14 +83,20 @@ export default function RecipeInProgress() {
       <p data-testid="instructions">
         {`${recipe.strInstructions}`}
       </p>
-      <div className={ styles.bode }>
+      <div className={ styles.container__ingredients }>
         {listIngredients.map((item, index) => {
           const ingredient = `strIngredient${item}`;
           const measure = `strMeasure${item}`;
           return recipe[ingredient]
           && (
             <IngredientStep
+              key={ index }
+              type={ typeRecipe }
+              id={ isMeals ? recipe.idMeal : recipe.idDrink }
+              haveProgress={ haveProgress(typeRecipe, isMeals, index) }
               index={ index }
+              totalProgress={ totalProgress }
+              setStatusRecipe={ setStatusRecipe }
               ingredient={ recipe[ingredient] }
               measure={ recipe[measure] }
             />
@@ -80,6 +108,7 @@ export default function RecipeInProgress() {
       <button
         type="button"
         data-testid="finish-recipe-btn"
+        disabled={ !statusRecipe }
       >
         Finish Recipe
 
@@ -88,3 +117,4 @@ export default function RecipeInProgress() {
     </div>
   );
 }
+// bode
