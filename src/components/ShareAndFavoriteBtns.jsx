@@ -74,18 +74,21 @@ function ShareAndFavoriteBtns({ recipe }) {
   return (
     <div>
       <section className="ContainerBtns">
-        <button
-          data-testid="share-btn"
-          type="submit"
-          name="shareBtn"
-          onClick={ handleClick }
-        >
+        <label className="ShareBtnLabel">
+          <input
+            data-testid="share-btn"
+            className="ShareBtnInput"
+            type="button"
+            name="shareBtn"
+            src={ shareIcon }
+            onClick={ handleClick }
+          />
           <img
-            className="ShareIcon"
+            className="ShareBtnIcon"
             src={ shareIcon }
             alt="ícone de compartilhar"
           />
-        </button>
+        </label>
         <span>
           {
             isFavorite ? (
