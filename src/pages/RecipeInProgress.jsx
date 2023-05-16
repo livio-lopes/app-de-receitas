@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useHistory } from 'react-router-dom';
 import { arrlen20, arrlen15 } from '../util/arrAux';
 import IngredientStep from '../components/IngredientStep';
 import styles from './RecipeInProgress.module.css';
@@ -13,6 +13,7 @@ export default function RecipeInProgress() {
   const [statusRecipe, setStatusRecipe] = useState(false);
   const { recipeId } = useParams();
   const location = useLocation();
+  const history = useHistory();
 
   const haveProgress = (type, typeId, index) => {
     const id = typeId ? recipe.idMeal : recipe.idDrink;
@@ -52,6 +53,38 @@ export default function RecipeInProgress() {
         });
     }
   }, [setRecipe, recipeId, location.pathname, recipe]);
+
+  const theDoneRecipe = () => {
+    const date = new Date();
+    const doneDate = date.toISOString();
+
+    return {
+      id: recipeId,
+      type: typeRecipe.replace('s', ''),
+      nationality: isMeals ? recipe.strArea : '',
+      category: recipe.strCategory,
+      alcoholicOrNot: isMeals ? '' : recipe.strAlcoholic,
+      name: isMeals ? recipe.strMeal : recipe.strDrink,
+      image: isMeals ? recipe.strMealThumb : recipe.strDrinkThumb,
+      doneDate,
+      tags: recipe.strTags ? recipe.strTags.split(',') : [],
+    };
+  };
+  const saveDoneRecipes = () => {
+    if (localStorage.getItem('doneRecipes') === null) {
+      const firstRecipe = [theDoneRecipe()];
+      localStorage.setItem('doneRecipes', JSON.stringify(firstRecipe));
+    } else {
+      const nextRecipe = [theDoneRecipe()];
+      const recipesComplete = JSON.parse(localStorage.getItem('doneRecipes'));
+      const newRecipe = [...recipesComplete, nextRecipe];
+      localStorage.setItem('doneRecipes', JSON.stringify(newRecipe));
+    }
+  };
+  const finishRecipe = () => {
+    saveDoneRecipes();
+    history.push('/done-recipes');
+  };
 
   return (
     <div>
@@ -109,6 +142,7 @@ export default function RecipeInProgress() {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ !statusRecipe }
+        onClick={ () => finishRecipe() }
       >
         Finish Recipe
 
@@ -117,4 +151,3 @@ export default function RecipeInProgress() {
     </div>
   );
 }
-// bode
