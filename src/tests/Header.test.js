@@ -1,40 +1,54 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import rendeWithRouter from './helpers/renderWithRouter';
+import { act } from 'react-dom/test-utils';
+import { renderWithRouter } from './helpers/renderWithRouter';
+import { RecipesProvider } from '../providers/RecipesProvider';
+import { AppProvider } from '../providers/AppProvider';
+import { RecipeDetailsProvider } from '../providers/RecipeDetailsProvider';
 import App from '../App';
 
 describe('Testando componente Header', () => {
-  it('Verifica se todos os componentes estão na tela', () => {
-    rendeWithRouter(<App />, { initialEntries: ['/done-recipes'] });
+  it('Verifica se ao clicar no ícone de perfil a tela é redirecionada para "/profile"', () => {
+    const { history } = renderWithRouter(
+      <RecipesProvider>
+        <AppProvider>
+          <RecipeDetailsProvider>
+            <App />
+          </RecipeDetailsProvider>
+        </AppProvider>
+      </RecipesProvider>,
+    );
+    act(() => {
+      history.push('/meals');
+    });
     const profileIcon = screen.getByRole('img', { name: /perfil/i });
     expect(profileIcon).toBeInTheDocument();
-    const titleDoneRecipes = screen.getByRole('heading', { name: /done/i });
-    expect(titleDoneRecipes).toBeInTheDocument();
-    const btnProfile = screen.getByTestId('profile-top-btn');
-    expect(btnProfile).toBeInTheDocument();
-    userEvent.click(btnProfile);
+    userEvent.click(profileIcon);
+    const { location: { pathname } } = history;
+    expect(pathname).toBe('/profile');
   });
-  it('Testa se o botão da barra de pesquisa são renderizados', () => {
-    rendeWithRouter(<App />, { initialEntries: ['/meals'] });
-    const btnPesquisa = screen.getByRole('button', { name: /pesquisa/i });
-    expect(btnPesquisa).toBeInTheDocument();
-    userEvent.click(btnPesquisa);
-    const inputSearch = screen.queryByTestId('search-input');
-    expect(inputSearch).toBeInTheDocument();
-    userEvent.click(btnPesquisa);
-    expect(inputSearch).not.toBeInTheDocument();
-  });
-  it('Testa se ao clicar no ícone de perfil é redirecionado para a rota /profile', () => {
-    const { history } = rendeWithRouter(<App />, { initialEntries: ['/meals'] });
-    const { pathname } = history.location;
-    const title = screen.getByRole('heading', { name: /meals/i, level: 1 });
-    expect(title).toBeInTheDocument();
+
+  it('Verifica se ao clicar no ícone da lupa a abre o input de pesquisa e ao ciclar novamente ele sai da tela"', () => {
+    const { history } = renderWithRouter(
+      <RecipesProvider>
+        <AppProvider>
+          <RecipeDetailsProvider>
+            <App />
+          </RecipeDetailsProvider>
+        </AppProvider>
+      </RecipesProvider>,
+    );
+    act(() => {
+      history.push('/meals');
+    });
+    const { location: { pathname } } = history;
     expect(pathname).toBe('/meals');
-    const profileIcon = screen.getByRole('img', { name: /perfil/i });
-    expect(profileIcon).toBeInTheDocument();
-    const btnProfile = screen.getByTestId('profile-top-btn');
-    expect(btnProfile).toBeInTheDocument();
-    userEvent.click(btnProfile);
-    // expect(pathname).toBe('/profile');
+    const searchIcon = screen.getByRole('img', { name: /search/i });
+    expect(searchIcon).toBeInTheDocument();
+    userEvent.click(searchIcon);
+    const inputSearch = screen.getByRole('textbox');
+    expect(inputSearch).toBeInTheDocument();
+    userEvent.click(searchIcon);
+    expect(inputSearch).not.toBeInTheDocument();
   });
 });
