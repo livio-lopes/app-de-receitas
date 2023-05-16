@@ -53,7 +53,7 @@ function Header() {
             <img
               data-testid="search-top-btn"
               src={ searchIcon }
-              alt="pesquisa"
+              alt="search"
             />
           </button>
         )
