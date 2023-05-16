@@ -12,10 +12,11 @@ function ContentFavoriteRecipes() {
   const [statusLinkCopied, setStatusLinkCopied] = useState(false);
 
   useEffect(() => {
-    const getFavoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-
-    if (getFavoriteRecipes.length > 0) {
-      setFavoriteRecipes(getFavoriteRecipes);
+    if (localStorage.getItem('favoriteRecipes')) {
+      const getFavoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      if (getFavoriteRecipes.length > 0) {
+        setFavoriteRecipes(getFavoriteRecipes);
+      }
     }
   }, []);
 
