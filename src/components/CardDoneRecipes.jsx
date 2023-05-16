@@ -1,82 +1,113 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import propTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
+import { AppContext } from '../providers/AppProvider';
 
-// import propTypes from 'prop-types';
+const copy = require('clipboard-copy');
 
-export default function CardDoneRecipes() {
-  const getLocalStorage = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-  console.log(getLocalStorage);
+export default function CardDoneRecipes({
+  name,
+  image,
+  nationality,
+  category,
+  doneDate,
+  index,
+  tag,
+  alcoholicOrNot,
+  type,
+  id,
+}) {
+  const contextValue = useContext(AppContext);
+  const { setStatusLinkCopied } = contextValue;
+  const copyURL = () => {
+    if (type === 'meal') {
+      const pageLink = `http://localhost:3000/meals/${id}`;
+      copy(pageLink);
+      setStatusLinkCopied(true);
+    }
+    if (type === 'drink') {
+      const pageLink = `http://localhost:3000/drinks/${id}`;
+      copy(pageLink);
+      setStatusLinkCopied(true);
+    }
+  };
+
   return (
     <div>
       {
-        getLocalStorage.length > 0 ? (getLocalStorage.map((each, index) => (
-          each.type === 'meal' ? (
-            <div key={ each + index }>
-              <h1>ISSO AQUI É COMIDA</h1>
+        type === 'meal' ? (
+          <div key={ type + index }>
+            <h1>ISSO AQUI É COMIDA</h1>
+            <Link to={ `/meals/${id}` }>
               <h2 data-testid={ `${index}-horizontal-name` }>
-                { each.name }
+                { name }
               </h2>
               <img
-                src={ each.image }
+                src={ image }
                 alt="nada com nada"
                 data-testid={ `${index}-horizontal-image` }
               />
-              <p data-testid={ `${index}-horizontal-top-text` }>
-                {`${each.nationality} - ${each.category}`}
-              </p>
-              <p data-testid={ `${index}-horizontal-done-date` }>
-                { each.doneDate }
-              </p>
-              <h1>{index}</h1>
-              <button
-                data-testid={ `${index}-horizontal-share-btn` }
-                src={ shareIcon }
-              >
-                <img src={ shareIcon } alt="Ícone de compartilhamento" />
-                Compartilhar
-              </button>
-              {
-                each.tags
-              && each.tags.length > 0
-              && each.tags.map((eachTag, secondIndex) => (
+            </Link>
+            <p data-testid={ `${index}-horizontal-top-text` }>
+              {`${nationality} - ${category}`}
+            </p>
+            <p data-testid={ `${index}-horizontal-done-date` }>
+              { doneDate }
+            </p>
+            <h1>{index}</h1>
+            <button
+              data-testid={ `${index}-horizontal-share-btn` }
+              src={ shareIcon }
+              onClick={ copyURL }
+            >
+              <img src={ shareIcon } alt="Ícone de compartilhamento" />
+              Compartilhar
+            </button>
+            {
+              tag
+              && tag.length > 0
+              && tag.map((eachTag, secondIndex) => (
                 <p
                   data-testid={ `${index}-${eachTag}-horizontal-tag` }
                   key={ eachTag + secondIndex }
                 >
                   { eachTag }
-                </p>
-              ))
-              }
-            </div>
-          ) : (
-            <div key={ each + index }>
+                </p>))
+            }
+          </div>)
+          : (
+            <div key={ type + index }>
               <h1>ISSO AQUI É BEBIDA</h1>
-              <h2 data-testid={ `${index}-horizontal-name` }>
-                { each.name }
-              </h2>
-              <img
-                src={ each.image }
-                alt="nada com nada"
-                data-testid={ `${index}-horizontal-image` }
-              />
+              <Link to={ `/drinks/${id}` }>
+                <h2 data-testid={ `${index}-horizontal-name` }>
+                  { name }
+                </h2>
+                <img
+                  src={ image }
+                  alt="nada com nada"
+                  data-testid={ `${index}-horizontal-image` }
+                />
+              </Link>
               <p data-testid={ `${index}-horizontal-top-text` }>
-                { each.alcoholicOrNot }
+                { alcoholicOrNot }
               </p>
               <p data-testid={ `${index}-horizontal-done-date` }>
-                { each.doneDate }
+                { doneDate }
               </p>
               <h1>{index}</h1>
               <button
                 data-testid={ `${index}-horizontal-share-btn` }
                 src={ shareIcon }
+                onClick={ copyURL }
               >
                 <img src={ shareIcon } alt="Ícone de compartilhamento" />
                 Compartilhar
               </button>
               {
-                each.tags
-            && each.tags.length > 0
-            && each.tags.map((eachTag, secondIndex) => (
+                tag
+            && tag.length > 0
+            && tag.map((eachTag, secondIndex) => (
               <p
                 data-testid={ `${index}-${eachTag}-horizontal-tag` }
                 key={ eachTag + secondIndex }
@@ -87,11 +118,20 @@ export default function CardDoneRecipes() {
               }
             </div>
           )
-        ))
-        ) : (
-          <h1> LOCAL STORAGE VAZIO MEU PRINCIPE, VOLTE QUANDO TIVER ALGO AQUI </h1>
-        )
       }
     </div>
   );
 }
+
+CardDoneRecipes.propTypes = {
+  name: propTypes.string.isRequired,
+  image: propTypes.string.isRequired,
+  nationality: propTypes.string.isRequired,
+  category: propTypes.string.isRequired,
+  doneDate: propTypes.string.isRequired,
+  index: propTypes.number.isRequired,
+  tag: propTypes.arrayOf(propTypes.string).isRequired,
+  alcoholicOrNot: propTypes.string.isRequired,
+  type: propTypes.string.isRequired,
+  id: propTypes.string.isRequired,
+};
