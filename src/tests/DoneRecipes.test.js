@@ -1,5 +1,6 @@
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, cleanup } from '@testing-library/react';
 // import DoneRecipes from '../pages/DoneRecipes';
+// import clipboardCopy from 'clipboard-copy';
 import { renderWithRouter } from './helpers/renderWithRouter';
 import { AppProvider } from '../providers/AppProvider';
 import { RecipeDetailsProvider } from '../providers/RecipeDetailsProvider';
@@ -15,11 +16,26 @@ const allButton = 'filter-by-all-btn';
 const mealsButton = 'filter-by-meal-btn';
 const drinksButton = 'filter-by-drink-btn';
 
+const writeText = jest.fn();
+
+Object.assign(navigator, {
+  clipboard: {
+    writeText,
+  },
+});
+
 describe('Testa a page RecipeDetails no endereço /meals/52771', () => {
   beforeEach(async () => {
+    navigator.clipboard.writeText.mockResolvedValue(undefined);
+
     mealMock = jest.spyOn(global, 'fetch').mockResolvedValue({
       json: async () => mealId52771,
     });
+  });
+
+  afterEach(() => {
+    localStorage.removeItem('doneRecipes');
+    cleanup();
   });
 
   it('testa a requisição na API da carne id 52771', async () => {
@@ -95,20 +111,23 @@ describe('Testa a page RecipeDetails no endereço /meals/52771', () => {
     expect(titleMeal).toBeInTheDocument();
   });
 
-  it('local storage vazio inicialmente', async () => {
-    renderWithRouter(
-      <AppProvider>
-        <RecipesProvider>
-          <RecipeDetailsProvider>
-            <App />
-          </RecipeDetailsProvider>
-        </RecipesProvider>
-      </AppProvider>,
-      { initialEntries: [mealsPath] },
-    );
+  it('testa se o botão compartilhar executa o copyboard e adiciona o texto link copied', async () => {
+    const data = [
+      {
+        id: '52771',
+        type: 'meal',
+        nationality: 'Italian',
+        category: 'Vegetarian',
+        alcoholicOrNot: '',
+        name: 'Spicy Arrabiata Penne',
+        image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+        doneDate: '2023-05-16T02:21:54.545Z',
+        tags: ['Pasta', 'Curry'],
+      },
+    ];
 
-    const localstorageDone = screen.getByRole('button', { name: /trigger localstoragedone test/i });
-    fireEvent.click(localstorageDone);
+    // Salvar os dados no local storage
+    localStorage.setItem('doneRecipes', JSON.stringify(data));
 
     renderWithRouter(
       <AppProvider>
@@ -121,9 +140,44 @@ describe('Testa a page RecipeDetails no endereço /meals/52771', () => {
       { initialEntries: [doneRecipesPath] },
     );
 
-    const buttonShare = await screen.findByRole('button', { name: /ícone de compartilhamentocompartilhar/i });
-    fireEvent.click(buttonShare);
-    const linkCopied = screen.getByText(/link copied!/i);
-    expect(linkCopied).toBeInTheDocument();
+    // Realizar asserções no componente renderizado
+    // Exemplo:
+    // Verificar se o nome do prato está sendo exibido corretamente
+    const nomeDoPrato = screen.getByText('Spicy Arrabiata Penne');
+    expect(nomeDoPrato).toBeInTheDocument();
+
+    const shareButton = screen.getByText(/compartilhar/i);
+    fireEvent.click(shareButton);
+
+    const alertMessage = screen.getByText(/link copied!/i);
+    expect(alertMessage).toBeInTheDocument();
+  });
+
+  it('testa os filtros com o localstorage vazio', () => {
+    renderWithRouter(
+      <AppProvider>
+        <RecipesProvider>
+          <RecipeDetailsProvider>
+            <App />
+          </RecipeDetailsProvider>
+        </RecipesProvider>
+      </AppProvider>,
+      { initialEntries: [doneRecipesPath] },
+    );
+
+    const filterByAllButton = screen.getByTestId(allButton);
+    const filterByMealButton = screen.getByTestId(mealsButton);
+    const filterByDrinkButton = screen.getByTestId(drinksButton);
+
+    const localStorageVazio = screen.getByRole('heading', { name: /local storage vazio meu principe, volte quando tiver algo aqui/i });
+
+    fireEvent.click(filterByDrinkButton);
+    expect(localStorageVazio).toBeInTheDocument();
+
+    fireEvent.click(filterByMealButton);
+    expect(localStorageVazio).toBeInTheDocument();
+
+    fireEvent.click(filterByAllButton);
+    expect(localStorageVazio).toBeInTheDocument();
   });
 });

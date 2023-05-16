@@ -12,7 +12,7 @@ export default function DoneRecipes() {
   const FilterAllButton = (clickedButton) => {
     if (clickedButton === 'All') {
       const getLocalStorage = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-      console.log('botão All clickado, resetando filtros...');
+      console.log('botão All clickado, resetando filtros...', getLocalStorage);
       setLocalStorage(getLocalStorage);
     }
 
@@ -35,7 +35,7 @@ export default function DoneRecipes() {
 
   useEffect(() => {
     const getLocalStorage = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-    console.log('teu local storage ta assim:', getLocalStorage);
+    console.log('teu local storage inicialmente:', getLocalStorage);
     setLocalStorage(getLocalStorage);
   }, []);
 
