@@ -16,7 +16,7 @@ function SearchBar() {
   const { setRecipes } = useContext(RecipesContext);
 
   const [searchInput, setSearchInput] = useState('');
-  const [radioSearch, setsetRadioSearch] = useState(null);
+  const [radioSearch, setRadioSearch] = useState(null);
   const history = useHistory();
   const { pathname } = history.location;
 
@@ -24,9 +24,9 @@ function SearchBar() {
     let data = [];
     if (radioSearch === 'ingredient') {
       data = await fetchMealsIngredient(searchInput);
-    } if (radioSearch === 'name') {
+    } else if (radioSearch === 'name') {
       data = await fetchMealsNameSearch(searchInput);
-    } if (radioSearch === 'firstLetter') {
+    } else if (radioSearch === 'firstLetter') {
       const inputArray = searchInput.split('');
       data = await fetchMealsFirstLetter(inputArray[0]);
       if (searchInput.length > 1) {
@@ -38,7 +38,7 @@ function SearchBar() {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     } else if (data.meals.length === 1) {
       history.push(`/meals/${data.meals[0].idMeal}`);
-    } else if (data.meals.length > 1) {
+    } else {
       setRecipes(data.meals.slice(0, MAX_RECIPES));
     }
   };
@@ -61,7 +61,7 @@ function SearchBar() {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     } else if (data.drinks.length === 1) {
       history.push(`/drinks/${data.drinks[0].idDrink}`);
-    } else if (data.drinks.length > 1) {
+    } else {
       setRecipes(data.drinks.slice(0, MAX_RECIPES));
     }
   };
@@ -92,7 +92,7 @@ function SearchBar() {
           name="search"
           data-testid="ingredient-search-radio"
           value="ingredient"
-          onChange={ ({ target }) => setsetRadioSearch(target.value) }
+          onChange={ ({ target }) => setRadioSearch(target.value) }
         />
       </label>
       <label>
@@ -102,7 +102,7 @@ function SearchBar() {
           name="search"
           data-testid="name-search-radio"
           value="name"
-          onChange={ ({ target }) => setsetRadioSearch(target.value) }
+          onChange={ ({ target }) => setRadioSearch(target.value) }
         />
       </label>
       <label>
@@ -112,7 +112,7 @@ function SearchBar() {
           name="search"
           data-testid="first-letter-search-radio"
           value="firstLetter"
-          onChange={ ({ target }) => setsetRadioSearch(target.value) }
+          onChange={ ({ target }) => setRadioSearch(target.value) }
         />
       </label>
       <button
