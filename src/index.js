@@ -13,13 +13,13 @@ ReactDOM
   .createRoot(document.getElementById('root'))
   .render(
     <BrowserRouter>
-      <AppProvider>
-        <RecipesProvider>
+      <RecipesProvider>
+        <AppProvider>
           <RecipeDetailsProvider>
             <App />
           </RecipeDetailsProvider>
-        </RecipesProvider>
-      </AppProvider>
+        </AppProvider>
+      </RecipesProvider>
     </BrowserRouter>,
   );
 

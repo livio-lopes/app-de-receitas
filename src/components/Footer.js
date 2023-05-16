@@ -24,6 +24,7 @@ export default function Footer() {
       </button>
       <button
         type="button"
+        data-testid="btn-meal"
         onClick={ () => history.push('/meals') }
       >
         <img
