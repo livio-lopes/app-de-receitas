@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import styles from './Login.module.css';
+import logo from '../images/helpmom.svg';
 
 export default function Login() {
   const [user, setUser] = useState({ email: '', password: '' });
@@ -17,10 +19,12 @@ export default function Login() {
     history.push('/meals');
   };
   return (
-
-    <div>
+    <div className={ styles.container__login }>
+      <img className={ styles.image__logo } src={ logo } alt="Logo Principal" />
+      <h1>Login</h1>
       <label htmlFor="email">
         <input
+          className={ styles.input__login }
           type="email"
           name="email"
           value={ user.email }
@@ -31,6 +35,7 @@ export default function Login() {
       </label>
       <label htmlFor="password">
         <input
+          className={ styles.input__login }
           type="password"
           name="password"
           value={ user.password }
@@ -40,13 +45,13 @@ export default function Login() {
         />
       </label>
       <button
+        className={ styles.button__enabled }
         type="button"
         data-testid="login-submit-btn"
         disabled={ validationAccess() }
         onClick={ () => loginApp() }
       >
         Enter
-
       </button>
     </div>
   );

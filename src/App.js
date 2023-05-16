@@ -5,7 +5,7 @@ import Routes from './components/Routes';
 
 function App() {
   return (
-    <div className="meals">
+    <div className="container__routes">
       <Routes />
     </div>
   );
