@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import propTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import { AppContext } from '../providers/AppProvider';
 
@@ -38,14 +39,16 @@ export default function CardDoneRecipes({
         type === 'meal' ? (
           <div key={ type + index }>
             <h1>ISSO AQUI É COMIDA</h1>
-            <h2 data-testid={ `${index}-horizontal-name` }>
-              { name }
-            </h2>
-            <img
-              src={ image }
-              alt="nada com nada"
-              data-testid={ `${index}-horizontal-image` }
-            />
+            <Link to={ `/meals/${id}` }>
+              <h2 data-testid={ `${index}-horizontal-name` }>
+                { name }
+              </h2>
+              <img
+                src={ image }
+                alt="nada com nada"
+                data-testid={ `${index}-horizontal-image` }
+              />
+            </Link>
             <p data-testid={ `${index}-horizontal-top-text` }>
               {`${nationality} - ${category}`}
             </p>
@@ -76,14 +79,16 @@ export default function CardDoneRecipes({
           : (
             <div key={ type + index }>
               <h1>ISSO AQUI É BEBIDA</h1>
-              <h2 data-testid={ `${index}-horizontal-name` }>
-                { name }
-              </h2>
-              <img
-                src={ image }
-                alt="nada com nada"
-                data-testid={ `${index}-horizontal-image` }
-              />
+              <Link to={ `/drinks/${id}` }>
+                <h2 data-testid={ `${index}-horizontal-name` }>
+                  { name }
+                </h2>
+                <img
+                  src={ image }
+                  alt="nada com nada"
+                  data-testid={ `${index}-horizontal-image` }
+                />
+              </Link>
               <p data-testid={ `${index}-horizontal-top-text` }>
                 { alcoholicOrNot }
               </p>
