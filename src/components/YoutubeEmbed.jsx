@@ -3,10 +3,8 @@ import PropTypes from 'prop-types';
 
 function YoutubeEmbed({ embedId }) {
   return (
-    <div>
+    <div className="ClassTemporariaYoutube">
       <iframe
-        width="853"
-        height="480"
         src={ `https://www.youtube-nocookie.com/embed/${embedId}` }
         allow="accelerometer;
         autoplay;

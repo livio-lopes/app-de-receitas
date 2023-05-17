@@ -17,11 +17,16 @@ html {
 .ContainerRecipeDetails {
   display: block;
   height: 100vh;
+  text-align: center;
   width: 100vw;
 }
 
 .ContainerRecipeDetails img {
   max-width: 360px;
+}
+
+.ClassTemporariaYoutube {
+  align-content: center;
 }
 
 /* .rocksGlass {
