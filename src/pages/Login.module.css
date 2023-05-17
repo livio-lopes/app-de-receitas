@@ -1,5 +1,9 @@
 .container__login {
   align-items: center;
+  background-image: url('../images/notebook-recipe-tomato-farfalle-garlic-onion-mortar-pepper-top-view-copy-space.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   gap: 10px;

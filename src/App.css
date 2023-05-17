@@ -1,8 +1,8 @@
-html{
-  margin: 0;
-  padding: 0;
+html {
   box-sizing: border-box;
   height: 100vh;
+  margin: 0;
+  padding: 0;
   width: 100vw;
 }
 
@@ -12,10 +12,21 @@ html{
   height: 100vh;
   justify-content: center;
   width: 100vw;
-  background-image: url('./images/notebook-recipe-tomato-farfalle-garlic-onion-mortar-pepper-top-view-copy-space.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+}
+
+.ContainerRecipeDetails {
+  display: block;
+  height: 100vh;
+  text-align: center;
+  width: 100vw;
+}
+
+.ContainerRecipeDetails img {
+  max-width: 360px;
+}
+
+.ClassTemporariaYoutube {
+  align-content: center;
 }
 
 /* .rocksGlass {
@@ -74,9 +85,4 @@ html{
     transform: rotate(-10deg);
   }
 }
-
-.tb {
-  display: block;
-  height: 100vh;
-  width: 100vw;
-} */
+ */

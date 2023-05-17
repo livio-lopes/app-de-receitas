@@ -147,7 +147,7 @@ export default function RecipeDetails() {
   };
 
   return (
-    <div className="tb">
+    <div className="ContainerRecipeDetails">
       <h1>Tela de Detalhes Receitas</h1>
       <ShareAndFavoriteBtns
         recipe={ objectDetails }
