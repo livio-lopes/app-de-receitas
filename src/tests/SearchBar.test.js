@@ -97,10 +97,10 @@ describe('Testando componente SearchBar', () => {
     act(() => {
       history.push('/meals');
     });
-    const { location: { pathname } } = history;
-    expect(pathname).toBe('/meals');
     const searchIcon = screen.getByRole('img', { name: /search/i });
     userEvent.click(searchIcon);
+    const { location: { pathname } } = history;
+    expect(pathname).toBe('/meals');
 
     const inputSearch = screen.getByRole('textbox');
     const radioName = screen.getByRole('radio', { name: /name/i });
@@ -140,10 +140,10 @@ describe('Testando componente SearchBar', () => {
     act(() => {
       history.push('/drinks');
     });
-    const { location: { pathname } } = history;
-    expect(pathname).toBe('/drinks');
     const searchIcon = screen.getByRole('img', { name: /search/i });
     userEvent.click(searchIcon);
+    const { location: { pathname } } = history;
+    expect(pathname).toBe('/drinks');
 
     const inputSearch = screen.getByRole('textbox');
     expect(inputSearch).toBeInTheDocument();
@@ -336,6 +336,86 @@ describe('Testando componente SearchBar', () => {
 
     userEvent.type(inputSearch, 'beef');
     userEvent.click(radioName);
+    userEvent.click(btnSearch);
+
+    expect(await screen.findByTestId(card0)).toBeInTheDocument();
+    expect(await screen.findByTestId(card1)).toBeInTheDocument();
+    expect(await screen.findByTestId(card2)).toBeInTheDocument();
+    expect(await screen.findByTestId(card3)).toBeInTheDocument();
+  });
+
+  it('Verifica se ao pesquisar (na rota /meals)por apenas uma letra digitando mais de um caracter, se a busca é feita considerando somente a primeira letra"', async () => {
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: async () => (beefMeals),
+    });
+    global.alert = jest.fn();
+    const { history } = renderWithRouter(
+      <RecipesProvider>
+        <AppProvider>
+          <RecipeDetailsProvider>
+            <App />
+          </RecipeDetailsProvider>
+        </AppProvider>
+      </RecipesProvider>,
+    );
+    act(() => {
+      history.push('/meals');
+    });
+    const { location: { pathname } } = history;
+    expect(pathname).toBe('/meals');
+    const searchIcon = screen.getByRole('img', { name: /search/i });
+    userEvent.click(searchIcon);
+
+    const inputSearch = screen.getByRole('textbox');
+    const radioFirstLetter = screen.getByRole('radio', { name: /first letter/i });
+    const btnSearch = screen.getByTestId(testidbtnSearch);
+
+    userEvent.type(inputSearch, 'beef');
+    userEvent.click(radioFirstLetter);
+    userEvent.click(btnSearch);
+
+    expect(await screen.findByTestId(card0)).toBeInTheDocument();
+    expect(await screen.findByTestId(card1)).toBeInTheDocument();
+    expect(await screen.findByTestId(card2)).toBeInTheDocument();
+    expect(await screen.findByTestId(card3)).toBeInTheDocument();
+    expect(await screen.findByTestId(card4)).toBeInTheDocument();
+    expect(await screen.findByTestId(card5)).toBeInTheDocument();
+    expect(await screen.findByTestId(card6)).toBeInTheDocument();
+    expect(await screen.findByTestId(card7)).toBeInTheDocument();
+    expect(await screen.findByTestId(card8)).toBeInTheDocument();
+    expect(await screen.findByTestId(card9)).toBeInTheDocument();
+    expect(await screen.findByTestId(card10)).toBeInTheDocument();
+    expect(await screen.findByTestId(card11)).toBeInTheDocument();
+  });
+
+  it('Verifica se (na rota /drinks) ao pesquisar por apenas uma letra digitando mais de um caracter, se a busca é feita considerando somente a primeira letra"', async () => {
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: async () => (cocoaDrinks),
+    });
+    global.alert = jest.fn();
+    const { history } = renderWithRouter(
+      <RecipesProvider>
+        <AppProvider>
+          <RecipeDetailsProvider>
+            <App />
+          </RecipeDetailsProvider>
+        </AppProvider>
+      </RecipesProvider>,
+    );
+    act(() => {
+      history.push('/drinks');
+    });
+    const { location: { pathname } } = history;
+    expect(pathname).toBe('/drinks');
+    const searchIcon = screen.getByRole('img', { name: /search/i });
+    userEvent.click(searchIcon);
+
+    const inputSearch = screen.getByRole('textbox');
+    const radioFirstLetter = screen.getByRole('radio', { name: /first letter/i });
+    const btnSearch = screen.getByTestId(testidbtnSearch);
+
+    userEvent.type(inputSearch, 'lemon');
+    userEvent.click(radioFirstLetter);
     userEvent.click(btnSearch);
 
     expect(await screen.findByTestId(card0)).toBeInTheDocument();

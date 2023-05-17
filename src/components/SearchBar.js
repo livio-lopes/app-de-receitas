@@ -22,19 +22,27 @@ function SearchBar() {
 
   const searchMeals = async () => {
     let data = [];
-    if (radioSearch === 'ingredient') {
+    let inputArray = [];
+
+    switch (radioSearch) {
+    case 'ingredient':
       data = await fetchMealsIngredient(searchInput);
-    } else if (radioSearch === 'name') {
+      break;
+    case 'name':
       data = await fetchMealsNameSearch(searchInput);
-    } else if (radioSearch === 'firstLetter') {
-      const inputArray = searchInput.split('');
+      break;
+    case 'firstLetter':
+      inputArray = searchInput.split('');
       data = await fetchMealsFirstLetter(inputArray[0]);
       if (searchInput.length > 1) {
         global.alert('Your search must have only 1 (one) character');
       }
+      break;
+    default:
+      data = { meals: null };
     }
 
-    if (data.meals === null || data.meals === undefined) {
+    if (data.meals === null) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     } else if (data.meals.length === 1) {
       history.push(`/meals/${data.meals[0].idMeal}`);
@@ -45,19 +53,27 @@ function SearchBar() {
 
   const searchDrinks = async () => {
     let data = [];
-    if (radioSearch === 'ingredient') {
+    let inputArray = [];
+
+    switch (radioSearch) {
+    case 'ingredient':
       data = await fetchDrinksIngredient(searchInput);
-    } if (radioSearch === 'name') {
+      break;
+    case 'name':
       data = await fetchDrinksNameSearch(searchInput);
-    } if (radioSearch === 'firstLetter') {
-      const inputArray = searchInput.split('');
+      break;
+    case 'firstLetter':
+      inputArray = searchInput.split('');
       data = await fetchDrinksFirstLetter(inputArray[0]);
       if (searchInput.length > 1) {
         global.alert('Your search must have only 1 (one) character');
       }
+      break;
+    default:
+      data = { drinks: null };
     }
 
-    if (data.drinks === null || data.drinks === undefined) {
+    if (data.drinks === null) {
       global.alert('Sorry, we haven\'t found any recipes for these filters.');
     } else if (data.drinks.length === 1) {
       history.push(`/drinks/${data.drinks[0].idDrink}`);
@@ -67,12 +83,10 @@ function SearchBar() {
   };
 
   const handleClickSearch = () => {
-    if (searchInput.length > 0) {
-      if (pathname === '/meals') {
-        searchMeals();
-      } else if (pathname === '/drinks') {
-        searchDrinks();
-      }
+    if (pathname === '/meals') {
+      searchMeals();
+    } else {
+      searchDrinks();
     }
   };
 
