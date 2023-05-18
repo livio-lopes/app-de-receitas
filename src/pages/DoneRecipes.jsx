@@ -40,7 +40,7 @@ export default function DoneRecipes() {
   }, []);
 
   return (
-    <div>
+    <div className="ContainerRecipeDetails">
       <Header />
       <button
         data-testid="filter-by-all-btn"
