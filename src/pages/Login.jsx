@@ -10,7 +10,7 @@ export default function Login() {
   const validationAccess = () => {
     const validEmail = (/\S+@\S+\.\S+/i).test(user.email);
     const minPasswordLength = 6;
-    const validPassword = user.password.length > minPasswordLength;
+    const validPassword = user.password.length >= minPasswordLength;
     return !(validEmail && validPassword);
   };
 
