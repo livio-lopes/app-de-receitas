@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import mealsIcon from '../images/icone-prato.svg';
+import drinkIcon from '../images/icone-bebida.svg';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import helpmonHeader from '../images/helpmonHeader.svg';
 import SearchBar from './SearchBar';
 import styles from './Header.module.css';
 
@@ -23,7 +26,6 @@ function Header() {
         captalize(arr))).join(' ');
     return title;
   };
-
   const handleSearchBar = () => {
     if (searchBar === true) {
       setSearchBar(false);
@@ -34,35 +36,27 @@ function Header() {
 
   return (
     <div className={ styles.container__header }>
-      <div>
+      <div className={ styles.container__imgBtns }>
+        <img
+          className={ styles.logo }
+          src={ helpmonHeader }
+          alt="logo header"
+        />
+        <div>
 
-        <button
-          className={ styles.btns }
-          type="submit"
-          onClick={ () => push('/profile') }
-        >
-          <img
-            data-testid="profile-top-btn"
-            src={ profileIcon }
-            alt="perfil"
-          />
-        </button>
-        <button
-          className={ styles.btns }
-          type="button"
-          onClick={ handleSearchBar }
-        >
-          <img
-            data-testid="search-top-btn"
-            src={ searchIcon }
-            alt="search"
-          />
-        </button>
-      </div>
-      {/* {
-        (pathname === '/meals' || pathname === '/drinks')
-        && (
           <button
+            className={ styles.btns }
+            type="submit"
+            onClick={ () => push('/profile') }
+          >
+            <img
+              data-testid="profile-top-btn"
+              src={ profileIcon }
+              alt="perfil"
+            />
+          </button>
+          <button
+            className={ styles.btns }
             type="button"
             onClick={ handleSearchBar }
           >
@@ -72,16 +66,16 @@ function Header() {
               alt="search"
             />
           </button>
-        )
-      } */}
-      <h1 data-testid="page-title">{handleTitle()}</h1>
-      {
-        (searchBar)
-        && (
-          <SearchBar />
-
-        )
-      }
+        </div>
+      </div>
+      <div className={ styles.container__title }>
+        <img
+          src={ handleTitle() === 'Meals' ? mealsIcon : drinkIcon }
+          alt={ `${handleTitle()}` }
+        />
+        <h1 data-testid="page-title">{handleTitle()}</h1>
+      </div>
+      { (searchBar) && (<SearchBar />)}
     </div>
   );
 }
