@@ -19,7 +19,7 @@
 }
 
 .button__enabled {
-  background-color: white;
+  background-color: rgb(153, 129, 129);
   border: 1px solid #454242;
   border-radius: 28px;
   box-shadow: 0 0 0 0 #06b3e3;
@@ -32,12 +32,11 @@
   font-weight: 700;
   padding: 5px 30px;
   text-decoration: none;
-  text-shadow: 0 1px 0 #06b3e3;
 }
 
 .button__enabled:enabled {
-  background-color: lightgreen;
-  color: white;
+  background-color: #fdf2d7;
+  color: #6b4e3c;
   font-family: Arial , Helvetica , sans-serif;
   font-size: 14px;
   font-style: italic;
