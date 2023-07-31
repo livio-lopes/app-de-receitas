@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { RecipesContext } from '../providers/RecipesProvider';
+import styles from './SearchButtons.module.css';
+import allIcon from '../images/All.svg';
+import iconFilter from '../util/searchButtonsUtils';
 
 export default function SearchButtons() {
   const { categories,
@@ -30,21 +33,28 @@ export default function SearchButtons() {
   }
 
   return (
-    <div>
+    <div className={ styles.container__btns }>
       <button
+        className={ styles.btns__search }
         type="button"
         data-testid="All-category-filter"
         onClick={ () => fetchRecipesByCategory(rotaAtual) }
       >
-        ALL
+        <img src={ allIcon } alt="icon all" />
+        <p>All</p>
       </button>
       {categories.map((category) => (
         <button
+          className={ styles.btns__search }
           key={ category.strCategory }
           data-testid={ `${category.strCategory}-category-filter` }
           onClick={ () => searchByCategory(category.strCategory) }
         >
-          {category.strCategory}
+          <img
+            src={ iconFilter(category.strCategory) }
+            alt={ `${category.strCategory}` }
+          />
+          <p>{category.strCategory}</p>
         </button>
       ))}
     </div>

@@ -1,0 +1,9 @@
+.container___btns {
+  display: flex;
+  justify-content: space-around;
+}
+
+.btns__search {
+  background-color: #fdf2d7;
+  border: none;
+}

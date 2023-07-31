@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { RecipesContext } from '../providers/RecipesProvider';
 import Card from '../components/Card';
 import styles from './Recipes.module.css';
-import SearchButtons from '../components/SeachButtons';
+import SearchButtons from '../components/SearchButtons';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
