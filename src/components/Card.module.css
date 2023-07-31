@@ -1,16 +1,13 @@
-.cardImages {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.cardImage {
-  margin-bottom: 20px;
+.btn__card {
+  background-color: #fdf2d7;
+  border-radius: 50px;
+  margin: 5px;
+  padding: 0;
   text-align: center;
-  width: calc(100% / 6);
 }
 
-.cardImage img {
-  height: auto;
-  width: 100%;
+.img__card {
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  max-width: 200px;
 }

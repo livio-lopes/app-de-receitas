@@ -16,25 +16,26 @@ export default function Card({ recipe, index }) {
   }
 
   return (
-    <div className={ styles.cardImage }>
-      <div data-testid={ `${index}-recipe-card` } className={ styles.cardImages }>
-        <button
-          type="button"
-          onClick={ () => redireciona() }
+    <div data-testid={ `${index}-recipe-card` }>
+      <button
+        className={ styles.btn__card }
+        type="button"
+        onClick={ () => redireciona() }
+      >
+        <img
+          className={ styles.img__card }
+          data-testid={ `${index}-card-img` }
+          src={ recipe.strMealThumb ? recipe.strMealThumb : recipe.strDrinkThumb }
+          alt="foto"
+        />
+        <p
+          data-testid={ `${index}-card-name` }
         >
-          <img
-            data-testid={ `${index}-card-img` }
-            src={ recipe.strMealThumb ? recipe.strMealThumb : recipe.strDrinkThumb }
-            alt="foto"
-          />
-          <p
-            data-testid={ `${index}-card-name` }
-          >
-            {recipe.strMeal ? recipe.strMeal : recipe.strDrink}
-          </p>
-        </button>
-      </div>
+          {recipe.strMeal ? recipe.strMeal : recipe.strDrink}
+        </p>
+      </button>
     </div>
+
   );
 }
 
