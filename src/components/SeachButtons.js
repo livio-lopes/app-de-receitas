@@ -30,7 +30,14 @@ export default function SearchButtons() {
   }
 
   return (
-    <>
+    <div>
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ () => fetchRecipesByCategory(rotaAtual) }
+      >
+        ALL
+      </button>
       {categories.map((category) => (
         <button
           key={ category.strCategory }
@@ -40,13 +47,6 @@ export default function SearchButtons() {
           {category.strCategory}
         </button>
       ))}
-      <button
-        type="button"
-        data-testid="All-category-filter"
-        onClick={ () => fetchRecipesByCategory(rotaAtual) }
-      >
-        ALL
-      </button>
-    </>
+    </div>
   );
 }

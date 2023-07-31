@@ -7,10 +7,8 @@ html {
 }
 
 .container__routes {
-  align-items: center;
-  display: flex;
+  display: block;
   height: 100vh;
-  justify-content: center;
   width: 100vw;
 }
 

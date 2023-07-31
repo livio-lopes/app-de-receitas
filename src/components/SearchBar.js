@@ -9,6 +9,7 @@ import {
   fetchDrinksFirstLetter,
 } from '../hooks/useFetch';
 import { RecipesContext } from '../providers/RecipesProvider';
+import styles from './SearchBar.module.css';
 
 const MAX_RECIPES = 12;
 
@@ -91,7 +92,7 @@ function SearchBar() {
   };
 
   return (
-    <form>
+    <form className={ styles.container__hidenSearch }>
       <input
         name="searchInput"
         value={ searchInput }
@@ -102,6 +103,7 @@ function SearchBar() {
       <label>
         Ingredient
         <input
+          className={ styles.input__searchbar }
           type="radio"
           name="search"
           data-testid="ingredient-search-radio"
@@ -112,6 +114,7 @@ function SearchBar() {
       <label>
         Name
         <input
+          className={ styles.input__searchbar }
           type="radio"
           name="search"
           data-testid="name-search-radio"
@@ -122,6 +125,7 @@ function SearchBar() {
       <label>
         First letter
         <input
+          className={ styles.input__searchbar }
           type="radio"
           name="search"
           data-testid="first-letter-search-radio"
@@ -130,6 +134,7 @@ function SearchBar() {
         />
       </label>
       <button
+        className={ styles.btn__search }
         data-testid="exec-search-btn"
         type="button"
         onClick={ handleClickSearch }
