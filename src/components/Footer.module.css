@@ -1,0 +1,14 @@
+.container__footer {
+  background-color: #6b4e3c;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  padding: 5px 10px;
+  position: fixed;
+  width: 100vw;
+}
+
+.btns__footer {
+  background-color: #6b4e3c;
+  border: none;
+}
