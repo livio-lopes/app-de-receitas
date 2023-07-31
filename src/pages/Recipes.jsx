@@ -9,10 +9,10 @@ import Footer from '../components/Footer';
 export default function Recipes() {
   const { recipes } = useContext(RecipesContext);
   return (
-    <div>
+    <div className={ styles.container__recipes }>
       <Header />
       <SearchButtons />
-      <div className={ styles.flex }>
+      <div className={ styles.container__cards }>
         {recipes.length > 0 && recipes.map((recipe, index) => (
           <Card
             key={ recipe.idMeal ? recipe.idMeal : recipe.idDrink }

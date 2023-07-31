@@ -1,4 +1,11 @@
-.flex {
+.container__cards {
   display: flex;
   flex-wrap: wrap;
+}
+
+.container__recipes {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
