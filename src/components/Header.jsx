@@ -50,6 +50,7 @@ function Header() {
             onClick={ () => push('/profile') }
           >
             <img
+              className={ styles.icon }
               data-testid="profile-top-btn"
               src={ profileIcon }
               alt="perfil"
@@ -61,6 +62,7 @@ function Header() {
             onClick={ handleSearchBar }
           >
             <img
+              className={ styles.icon }
               data-testid="search-top-btn"
               src={ searchIcon }
               alt="search"

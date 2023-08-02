@@ -94,45 +94,46 @@ function SearchBar() {
   return (
     <form className={ styles.container__hidenSearch }>
       <input
+        className={ styles.input__textSearch }
         name="searchInput"
         value={ searchInput }
         data-testid="search-input"
         placeholder="Search"
         onChange={ ({ target }) => setSearchInput(target.value) }
       />
-      <label>
-        Ingredient
-        <input
-          className={ styles.input__searchbar }
-          type="radio"
-          name="search"
-          data-testid="ingredient-search-radio"
-          value="ingredient"
-          onChange={ ({ target }) => setRadioSearch(target.value) }
-        />
-      </label>
-      <label>
-        Name
-        <input
-          className={ styles.input__searchbar }
-          type="radio"
-          name="search"
-          data-testid="name-search-radio"
-          value="name"
-          onChange={ ({ target }) => setRadioSearch(target.value) }
-        />
-      </label>
-      <label>
-        First letter
-        <input
-          className={ styles.input__searchbar }
-          type="radio"
-          name="search"
-          data-testid="first-letter-search-radio"
-          value="firstLetter"
-          onChange={ ({ target }) => setRadioSearch(target.value) }
-        />
-      </label>
+      <div className={ styles.container__radius }>
+        <label className={ styles.input__searchbar }>
+          Ingredient
+          <input
+            className={ styles.input__searchbar }
+            type="radio"
+            name="search"
+            data-testid="ingredient-search-radio"
+            value="ingredient"
+            onChange={ ({ target }) => setRadioSearch(target.value) }
+          />
+        </label>
+        <label className={ styles.input__searchbar }>
+          Name
+          <input
+            type="radio"
+            name="search"
+            data-testid="name-search-radio"
+            value="name"
+            onChange={ ({ target }) => setRadioSearch(target.value) }
+          />
+        </label>
+        <label className={ styles.input__searchbar }>
+          First letter
+          <input
+            type="radio"
+            name="search"
+            data-testid="first-letter-search-radio"
+            value="firstLetter"
+            onChange={ ({ target }) => setRadioSearch(target.value) }
+          />
+        </label>
+      </div>
       <button
         className={ styles.btn__search }
         data-testid="exec-search-btn"

@@ -1,13 +1,15 @@
 .btn__card {
   background-color: #fdf2d7;
   border-radius: 50px;
+  box-sizing: content-box;
   margin: 5px;
   padding: 0;
   text-align: center;
+  width: 200px;
 }
 
 .img__card {
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
-  max-width: 200px;
+  width: 100%;
 }
