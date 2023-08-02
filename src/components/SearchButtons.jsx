@@ -40,7 +40,11 @@ export default function SearchButtons() {
         data-testid="All-category-filter"
         onClick={ () => fetchRecipesByCategory(rotaAtual) }
       >
-        <img src={ allIcon } alt="icon all" />
+        <img
+          className={ styles.icon }
+          src={ allIcon }
+          alt="icon all"
+        />
         <p>All</p>
       </button>
       {categories.map((category) => (
@@ -51,6 +55,7 @@ export default function SearchButtons() {
           onClick={ () => searchByCategory(category.strCategory) }
         >
           <img
+            className={ styles.icon }
             src={ iconFilter(category.strCategory) }
             alt={ `${category.strCategory}` }
           />

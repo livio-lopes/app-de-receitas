@@ -12,31 +12,34 @@ export default function Footer() {
       data-testid="footer"
       className={ styles.container__footer }
     >
-      <button
-        className={ styles.btns__footer }
-        type="button"
-        onClick={ () => history.push('/drinks') }
-      >
-        <img
-          data-testid="drinks-bottom-btn"
+      <div className={ styles.container__centerFooter }>
+
+        <button
+          className={ styles.btns__footer }
           type="button"
-          src={ drinkIcon }
-          alt="drinkIcon"
-        />
-      </button>
-      <button
-        className={ styles.btns__footer }
-        type="button"
-        data-testid="btn-meal"
-        onClick={ () => history.push('/meals') }
-      >
-        <img
-          data-testid="meals-bottom-btn"
+          onClick={ () => history.push('/drinks') }
+        >
+          <img
+            data-testid="drinks-bottom-btn"
+            type="button"
+            src={ drinkIcon }
+            alt="drinkIcon"
+          />
+        </button>
+        <button
+          className={ styles.btns__footer }
           type="button"
-          src={ mealIcon }
-          alt="mealIcon"
-        />
-      </button>
+          data-testid="btn-meal"
+          onClick={ () => history.push('/meals') }
+        >
+          <img
+            data-testid="meals-bottom-btn"
+            type="button"
+            src={ mealIcon }
+            alt="mealIcon"
+          />
+        </button>
+      </div>
     </div>
   );
 }
