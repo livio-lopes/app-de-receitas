@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './Login.module.css';
 import logo from '../images/helpmom.svg';
-import validationAccess from '../util/loginUtils';
 
 export default function Login() {
   const [user, setUser] = useState({ email: '', password: '' });
@@ -10,6 +9,13 @@ export default function Login() {
   const loginApp = () => {
     localStorage.setItem('user', JSON.stringify({ email: user.email }));
     history.push('/meals');
+  };
+  const validationAccess = () => {
+    const validEmail = (/\S+@\S+\.\S+/i).test(user.email);
+    const minPasswordLength = 6;
+    const validPassword = user.password.length >= minPasswordLength;
+    console.log(validEmail, validPassword);
+    return !(validEmail && validPassword);
   };
   return (
     <div className={ styles.container__login }>
@@ -41,7 +47,7 @@ export default function Login() {
         className={ styles.button__enabled }
         type="button"
         data-testid="login-submit-btn"
-        disabled={ validationAccess(user) }
+        disabled={ validationAccess() }
         onClick={ () => loginApp() }
       >
         Entrar
