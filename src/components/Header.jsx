@@ -27,6 +27,7 @@ function Header() {
     return title;
   };
   const handleSearchBar = () => {
+    console.log(pathname);
     if (searchBar === true) {
       setSearchBar(false);
     } else {
@@ -56,18 +57,21 @@ function Header() {
               alt="perfil"
             />
           </button>
-          <button
-            className={ styles.btns }
-            type="button"
-            onClick={ handleSearchBar }
-          >
-            <img
-              className={ styles.icon }
-              data-testid="search-top-btn"
-              src={ searchIcon }
-              alt="search"
-            />
-          </button>
+          {(pathname === '/meals' || pathname === '/drinks')
+          && (
+            <button
+              className={ styles.btns }
+              type="button"
+              onClick={ handleSearchBar }
+            >
+              <img
+                className={ styles.icon }
+                data-testid="search-top-btn"
+                src={ searchIcon }
+                alt="search"
+              />
+            </button>
+          )}
         </div>
       </div>
       <div className={ styles.container__title }>
