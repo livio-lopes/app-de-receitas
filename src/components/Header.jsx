@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import mealsIcon from '../images/icone-prato.svg';
-import drinkIcon from '../images/icone-bebida.svg';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import helpmonHeader from '../images/helpmonHeader.svg';
 import SearchBar from './SearchBar';
 import styles from './Header.module.css';
+import iconFilter from '../util/searchButtonsUtils';
 
 const captalize = (string) => (
   string.charAt(0).toUpperCase() + string.slice(1)
@@ -27,7 +26,6 @@ function Header() {
     return title;
   };
   const handleSearchBar = () => {
-    console.log(pathname);
     if (searchBar === true) {
       setSearchBar(false);
     } else {
@@ -76,7 +74,7 @@ function Header() {
       </div>
       <div className={ styles.container__title }>
         <img
-          src={ handleTitle() === 'Meals' ? mealsIcon : drinkIcon }
+          src={ iconFilter(handleTitle()) }
           alt={ `${handleTitle()}` }
         />
         <h1 data-testid="page-title">{handleTitle()}</h1>

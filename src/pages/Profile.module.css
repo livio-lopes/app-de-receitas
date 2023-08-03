@@ -1,0 +1,41 @@
+.container__profile {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.container__menu {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: x-large;
+  padding-top: 50px;
+  width: 50%;
+}
+
+.btns__profile {
+  background-color: #fdf2d7;
+  border: none;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.btns__profile img {
+  margin-right: 20px;
+}
+
+@media screen and ( max-width : 480px ) {
+
+  .container__menu {
+    font-size: larger;
+  }
+
+  .btns__profile {
+    width: 250px;
+  }
+
+  .btns__profile img {
+    width: 30px;
+  }
+}
