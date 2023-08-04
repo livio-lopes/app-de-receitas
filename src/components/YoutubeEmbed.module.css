@@ -1,0 +1,9 @@
+.container__youtube {
+  display: flex;
+  flex-direction: column;
+}
+
+.container__youtube iframe {
+  height: 480px;
+  width: 720px;
+}

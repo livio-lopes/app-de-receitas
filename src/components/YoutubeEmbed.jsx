@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './YoutubeEmbed.module.css';
 
 function YoutubeEmbed({ embedId }) {
   return (
-    <div className="ClassTemporariaYoutube">
+    <div className={ styles.container__youtube }>
       <iframe
         src={ `https://www.youtube-nocookie.com/embed/${embedId}` }
         allow="accelerometer;
