@@ -107,30 +107,25 @@ export default function RecipeDetails() {
           />
         </div>
       </div>
-      <div>
-
-        {
-          ingredients.length > 0 && ingredients.map((ingredient, index) => (
-            <p
-              data-testid={ `${index}-ingredient-name-and-measure` }
-              key={ ingredient + index }
-            >
-              {ingredient}
-            </p>
-          ))
-        }
-        {
-          mensures.length > 0 && mensures.map((mensure, index) => (
-            <p
-              data-testid={ `${index}-ingredient-name-and-measure` }
-              key={ mensure + index }
-            >
-              { mensure }
-            </p>
-          ))
-        }
+      <div className={ styles.container__ingredients }>
+        <h3>Ingredients</h3>
+        <ul>
+          {
+            ingredients.length > 0 && ingredients.map((ingredient, index) => (
+              <li
+                data-testid={ `${index}-ingredient-name-and-measure` }
+                key={ ingredient + index }
+              >
+                {`${ingredient} ${mensures[index]}`}
+              </li>
+            ))
+          }
+        </ul>
       </div>
-      <p data-testid="instructions">{ instructionsText }</p>
+      <div className={ styles.container__instructions }>
+        <h3>Instructions</h3>
+        <p data-testid="instructions">{ instructionsText }</p>
+      </div>
       {
         youtubeVideoID && (<YoutubeEmbed embedId={ youtubeVideoID } />)
       }
@@ -138,6 +133,7 @@ export default function RecipeDetails() {
       {
         !recipeDone && (
           <button
+            className={ styles.btn__start }
             data-testid="start-recipe-btn"
             onClick={ () => { history.push(`${actualPath}/in-progress`); } }
           >

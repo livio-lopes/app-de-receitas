@@ -12,12 +12,18 @@
 }
 
 .container__btsTitle {
+  background-color: rgba(0, 0, 0, 0.3);
   color: #fdf2d7;
   display: flex;
   justify-content: space-between;
   padding-left: 20px;
   padding-right: 20px;
   position: absolute;
+  width: 720px;
+}
+
+.recipe__photo {
+  position: relative;
   width: 720px;
 }
 
@@ -31,7 +37,33 @@
   padding-top: 4px;
 }
 
-.recipe__photo {
-  position: relative;
-  width: 100%;
+.container__ingredients {
+  border-radius: 20px;
+  margin: 10px 0;
+  padding: 0 10px;
+  width: 720px;
+}
+
+.container__ingredients ul {
+  display: flex;
+  flex-flow: column wrap;
+  height: 200px;
+  list-style-type: decimal-leading-zero;
+}
+
+.container__instructions {
+  border-radius: 20px;
+  margin: 10px 0;
+  padding: 0 10px;
+  width: 720px;
+}
+
+.btn__start {
+  background-color: #6b4e3c;
+  border: none;
+  border-radius: 10px;
+  color: #fdf2d7;
+  font-size: x-large;
+  height: 60px;
+  width: 480px;
 }
