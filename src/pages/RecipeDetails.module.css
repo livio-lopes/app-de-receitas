@@ -1,0 +1,37 @@
+.container__recipeDetails {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.container__header {
+  align-items: end;
+  display: flex;
+  justify-content: space-around;
+  width: 720px;
+}
+
+.container__btsTitle {
+  color: #fdf2d7;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: absolute;
+  width: 720px;
+}
+
+.container__title {
+  align-items: center;
+  display: flex;
+}
+
+.container__title h3 {
+  margin-left: 10px;
+  padding-top: 4px;
+}
+
+.recipe__photo {
+  position: relative;
+  width: 100%;
+}
