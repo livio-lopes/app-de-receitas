@@ -7,3 +7,12 @@
   height: 480px;
   width: 720px;
 }
+
+
+@media screen and ( max-width : 480px ) {
+
+  .container__youtube iframe {
+    height: 240px;
+    width: 360px;
+  }
+}

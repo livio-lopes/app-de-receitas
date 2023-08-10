@@ -1,7 +1,7 @@
 import { Carousel, Row, Col } from 'react-bootstrap';
-import './style/CarouselRecommendations.css';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import styles from './CarouselRecommendations.module.css';
 
 function CarouselRecommendations() {
   const [items, setItems] = useState([]);
@@ -11,9 +11,6 @@ function CarouselRecommendations() {
     try {
       const results = await fetch(baseURL);
       const dataMeals = await results.json();
-      console.log('carnes recomendações:', dataMeals);
-
-      // criar item do carousel de carnes na tela de bebidas
 
       const limitAPI = 6;
       const itemsMeals = [];
@@ -26,7 +23,6 @@ function CarouselRecommendations() {
         };
         itemsMeals.push(meals);
       }
-      console.log('eu sou o teste de items', itemsMeals);
       setItems(itemsMeals);
     } catch (error) {
       console.log(error);
@@ -38,7 +34,6 @@ function CarouselRecommendations() {
     try {
       const results = await fetch(baseURL);
       const dataDrinks = await results.json();
-      console.log('bebidas recomendações:', dataDrinks);
       // criar item do carousel de bebidas na tela de carnes
       // 0, 1, 2, 3, 4, 5
       const limitAPI = 6;
@@ -52,7 +47,6 @@ function CarouselRecommendations() {
         };
         itemsDrinks.push(drink);
       }
-      console.log('eu sou o teste de items', itemsDrinks);
       setItems(itemsDrinks);
     } catch (error) {
       console.log(error);
@@ -65,12 +59,10 @@ function CarouselRecommendations() {
   const chooseRecommendation = useCallback(() => {
     if (actualPath.includes('/meals')) {
       recommendationDrinks();
-      console.log('chama drinks');
     }
 
     if (actualPath.includes('/drinks')) {
       recommendationMeals();
-      console.log('chama carnes');
     }
   }, [actualPath]);
 
@@ -79,17 +71,17 @@ function CarouselRecommendations() {
   }, [chooseRecommendation]);
 
   return (
-    <Carousel className="ifood-carousel">
+    <Carousel className={ styles.ifood__carousel }>
       {items.length > 0 && items.map((item, index) => (
         <Carousel.Item key={ index }>
-          <Row className="ifood-carousel-row">
+          <Row className={ styles.ifood__carouselRow }>
             <Col className="ifood-carousel-col">
               <div
-                className="ifood-carousel-img-container"
+                className={ styles.ifood__carouselImgContainer }
                 data-testid={ `${index * 2}-recommendation-card` }
               >
                 <img
-                  className="ifood-carousel-img"
+                  className={ styles.ifood__carouselImg }
                   src={ item.img1 }
                   alt={ `Slide ${index}` }
                 />
@@ -101,13 +93,13 @@ function CarouselRecommendations() {
                 </h5>
               </div>
             </Col>
-            <Col className="ifood-carousel-col">
+            <Col className={ styles.ifood__carouselCol }>
               <div
-                className="ifood-carousel-img-container"
+                className={ styles.ifood__carouselImgContainer }
                 data-testid={ `${index * 2 + 1}-recommendation-card` }
               >
                 <img
-                  className="ifood-carousel-img"
+                  className={ styles.ifood__carouselImg }
                   src={ item.img2 }
                   alt={ `Slide ${index}` }
                 />

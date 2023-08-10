@@ -1,0 +1,48 @@
+.ifood__carousel {
+  margin-top: 30px;
+}
+
+.ifood__carouselRow {
+  margin: 0;
+}
+
+.ifood__carouselCol {
+  padding: 0;
+}
+
+.ifood__carouselImgContainer {
+  height: 320px;
+  position: relative;
+  width: 100%;
+}
+
+.ifood__carouselImg {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.ifood__carouselImgContainer h5 {
+  background-color: rgba(0, 0, 0, 0.5);
+  bottom: 0;
+  color: white;
+  left: 0;
+  margin: 0;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+}
+
+@media screen and ( max-width : 480px ) {
+
+  .ifood__carouselImgContainer {
+    height: 160px;
+    width: 180px;
+  }
+
+  .ifood__carousel {
+    margin-bottom: 10px;
+  }
+}
